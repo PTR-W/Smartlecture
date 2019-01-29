@@ -1,4 +1,4 @@
-package com.example.iliass.smartlecture;
+package de.SmartLecture.application.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -34,6 +34,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import de.SmartLecture.R;
 
 public class OpenCamera extends AppCompatActivity {
 

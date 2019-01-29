@@ -16,6 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button execute = findViewById(R.id.button);
 
-        execute.setOnClickListener(new BtoNewAct(this, List.class));
+        execute.setOnClickListener(new BtoNewAct(this, OpenCamera.class));
     }
 }
