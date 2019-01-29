@@ -57,16 +57,16 @@ public class OpenCamera extends AppCompatActivity {
                     PERMISSION_REQUEST);
         }
         Log.i(LOG_TAG, "created");
-        //CamBtnListener ();
-        //ScheduleBtnListener();
     }
 
     private void ScheduleBtnListener() {
         ScheduleBtn = findViewById(R.id.btnSchedule);
+
         ScheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(//.this, schedule.class));
+                Intent listIntent = new Intent( OpenCamera.this, List.class);
+                startActivity(listIntent);
             }
         });
     }
@@ -94,7 +94,7 @@ public class OpenCamera extends AppCompatActivity {
                 e.printStackTrace();
                 return;
             }
-            Uri photoUri = FileProvider.getUriForFile(this, "com.example.iliass.smartlecture.provider", photoFile);
+            Uri photoUri = FileProvider.getUriForFile(this, "de.SmartLecture.provider", photoFile);
             pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(pictureIntent, CAMERA_REQUEST);
         }
