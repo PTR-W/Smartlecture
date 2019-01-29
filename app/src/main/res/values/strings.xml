@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SmartLecture</string>
+    <string name="execute">Ausführen</string>
+    <string name="nameofLecture">Name der Vorlesung</string>
+    <string name="weekday">Wochentag</string>
+    <string name="time">00:00</string>
+</resources>
