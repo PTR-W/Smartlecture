@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import de.SmartLecture.R;
+import de.SmartLecture.application.listener.BtoNewAct;
 
 public class OpenCamera extends AppCompatActivity {
 
@@ -58,19 +59,6 @@ public class OpenCamera extends AppCompatActivity {
         }
         Log.i(LOG_TAG, "created");
     }
-
-    private void ScheduleBtnListener() {
-        ScheduleBtn = findViewById(R.id.btnSchedule);
-
-        ScheduleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent listIntent = new Intent( OpenCamera.this, List.class);
-                startActivity(listIntent);
-            }
-        });
-    }
-
 
     private void CamBtnListener() {
         CameraBtn = findViewById(R.id.btnCamera);
@@ -129,7 +117,8 @@ public class OpenCamera extends AppCompatActivity {
         image= findViewById(R.id.image);
         image.setImageURI(Uri.parse(imageFilePath));
         CamBtnListener();
-        ScheduleBtnListener();
+        ScheduleBtn = findViewById(R.id.btnSchedule);
+        ScheduleBtn.setOnClickListener(new BtoNewAct(this, List.class));
     }
 
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
