@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".application.activity.List"></activity>
+        <activity android:name=".application.activity.ShowPicture"></activity>
+        <activity android:name=".application.activity.List" />
         <activity android:name=".application.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -28,7 +30,7 @@
         </provider>
 
         <activity android:name="application.activity.List" />
-        <activity android:name=".application.activity.OpenCamera"></activity>
+        <activity android:name=".application.activity.OpenCamera" />
     </application>
 
 </manifest>

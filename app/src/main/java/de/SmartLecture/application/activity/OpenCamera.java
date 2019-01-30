@@ -3,8 +3,6 @@ package de.SmartLecture.application.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -17,23 +15,14 @@ import android.os.Bundle;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.app.Activity;
-import android.graphics.PixelFormat;
-import android.hardware.Camera;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import de.SmartLecture.R;
 import de.SmartLecture.application.listener.BtoNewAct;
@@ -57,7 +46,6 @@ public class OpenCamera extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSION_REQUEST);
         }
-        Log.i(LOG_TAG, "created");
     }
 
     private void CamBtnListener() {
@@ -74,7 +62,7 @@ public class OpenCamera extends AppCompatActivity {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (pictureIntent.resolveActivity(getPackageManager()) != null) {
 
-            File photoFile = null;
+            File photoFile;
             try {
                 photoFile = createImageFile();
             }
@@ -91,12 +79,6 @@ public class OpenCamera extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSION_REQUEST && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Thanks for granting Permission", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private File createImageFile() throws IOException{
@@ -113,7 +95,6 @@ public class OpenCamera extends AppCompatActivity {
     protected void onResume () {
         super.onResume();
         setContentView(R.layout.open_camera);
-        Log.i(LOG_TAG, "resumed");
         image= findViewById(R.id.image);
         image.setImageURI(Uri.parse(imageFilePath));
         CamBtnListener();
@@ -124,6 +105,9 @@ public class OpenCamera extends AppCompatActivity {
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
         if (requestCode == 1 && resultCode == RESULT_OK) {
             image.setImageURI(Uri.parse(imageFilePath));
+            Intent showPictureIntent = new Intent(this, ShowPicture.class);
+            showPictureIntent.putExtra("filename", imageFilePath);
+            startActivity(showPictureIntent);
         }
     }
 }
