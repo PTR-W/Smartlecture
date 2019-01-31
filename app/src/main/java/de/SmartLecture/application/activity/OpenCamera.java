@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,13 +28,12 @@ import de.SmartLecture.application.listener.BtoNewAct;
 
 public class OpenCamera extends AppCompatActivity {
 
-    public static final String LOG_TAG = "MyLogTag";
+    public static final String LOG_TAG = "MyLog";
     private static final int CAMERA_REQUEST = 1;
     private static final int PERMISSION_REQUEST = 2;
     private String imageFilePath = "";
     private Button CameraBtn;
     private Button ScheduleBtn;
-    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +79,14 @@ public class OpenCamera extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+
     private File createImageFile() throws IOException{
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "IMG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        imageFilePath = image.getAbsolutePath();
+        imageFilePath = image.getPath();
 
         return image;
     }
@@ -95,8 +94,6 @@ public class OpenCamera extends AppCompatActivity {
     protected void onResume () {
         super.onResume();
         setContentView(R.layout.open_camera);
-        image= findViewById(R.id.image);
-        image.setImageURI(Uri.parse(imageFilePath));
         CamBtnListener();
         ScheduleBtn = findViewById(R.id.btnSchedule);
         ScheduleBtn.setOnClickListener(new BtoNewAct(this, List.class));
@@ -104,7 +101,6 @@ public class OpenCamera extends AppCompatActivity {
 
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            image.setImageURI(Uri.parse(imageFilePath));
             Intent showPictureIntent = new Intent(this, ShowPicture.class);
             showPictureIntent.putExtra("filename", imageFilePath);
             startActivity(showPictureIntent);
