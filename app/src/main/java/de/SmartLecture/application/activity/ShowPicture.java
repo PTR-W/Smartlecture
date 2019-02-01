@@ -2,6 +2,8 @@ package de.SmartLecture.application.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -29,10 +31,22 @@ public class ShowPicture extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_picture);
         Bundle extras = this.getIntent().getExtras();
+
+        // Contrast
+        ColorMatrix colorMatrix = new ColorMatrix();
+        float ContrastFactor = 1.2f;
+        colorMatrix.set(new float[] {
+                ContrastFactor, 0, 0, 0, 0,   // Red
+                0, ContrastFactor, 0, 0, 0,   // Green
+                0, 0, ContrastFactor, 0, 0,   // Blue
+                0, 0, 0, 1, 0 });             // Alpha
+
+
         if (extras != null)
         {
             String path = extras.getString("filename");
             image= findViewById(R.id.image);
+            image.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
             image.setImageURI(Uri.parse(path));
             saveimage(path);
         }
