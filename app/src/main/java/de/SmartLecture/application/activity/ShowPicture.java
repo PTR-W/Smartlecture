@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import de.SmartLecture.R;
+import de.SmartLecture.application.helper.FolderNameGenerator;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 
@@ -44,13 +45,14 @@ public class ShowPicture extends AppCompatActivity {
         {
             File root = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES);
 
-            File dir = new File(root.getAbsolutePath() + "/SmartLecture");
+            String folder = FolderNameGenerator.generateFolderName();
+            File dir = new File(root.getAbsolutePath() + "/SmartLecture/"+ folder);
             dir.mkdirs();
             int trimStart = filePath.lastIndexOf("/");
             int trimEnd = filePath.lastIndexOf(".");
             String imageFileName= filePath.substring(trimStart, trimEnd);
             Log.i(LOG_TAG, imageFileName);
-            File file = new File(root.getAbsolutePath() + "/SmartLecture/"+imageFileName+".jpg");
+            File file = new File(root.getAbsolutePath() + "/SmartLecture/"+folder +"/"+imageFileName+".jpg");
 
             try
             {
