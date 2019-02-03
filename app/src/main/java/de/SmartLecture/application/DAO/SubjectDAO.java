@@ -25,6 +25,6 @@ public interface SubjectDAO {
     @Query("DELETE FROM subject_table")
     void deleteAllSubjects();
 
-    @Query("SELECT * FROM subject_table ORDER BY startDate DESC")
+    @Query("SELECT * FROM subject_table ORDER BY dateStart")
     LiveData<List<Subject>> getAllSubjects();
 }

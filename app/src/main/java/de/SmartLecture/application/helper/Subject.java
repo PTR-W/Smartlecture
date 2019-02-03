@@ -10,8 +10,8 @@ public class Subject {
     @PrimaryKey(autoGenerate =  true)
     private int id;
     private String title;
-    private String startDate;
-    private String endDate;
+    private String dateStart;
+    private String dateEnd;
 
     public int getId() {
         return id;
@@ -21,18 +21,18 @@ public class Subject {
         return title;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getDateStart() {
+        return dateStart;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getDateEnd() {
+        return dateEnd;
     }
 
-    public Subject(String title, String startDate, String endDate) {
+    public Subject(String title, String dateStart, String dateEnd) {
         this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
     }
 
     public void setId(int id) {

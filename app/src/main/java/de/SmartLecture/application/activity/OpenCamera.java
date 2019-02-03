@@ -38,12 +38,6 @@ public class OpenCamera extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.open_camera);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSION_REQUEST);
-        }
     }
 
     private void CamBtnListener() {
@@ -93,6 +87,12 @@ public class OpenCamera extends AppCompatActivity {
 
     protected void onResume () {
         super.onResume();
+        setContentView(R.layout.open_camera);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_REQUEST);
+        }
         setContentView(R.layout.open_camera);
         CamBtnListener();
         ScheduleBtn = findViewById(R.id.btnSchedule);

@@ -7,4 +7,5 @@
     <string name="time">00:00</string>
     <string name="btnCamera">New Picture</string>
     <string name="title_activity_show_picture">ShowPicture</string>
+    <string name="title_activity_schedule">Schedule</string>
 </resources>
