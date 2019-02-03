@@ -42,6 +42,11 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
         notifyDataSetChanged();
     }
 
+    public Subject getSubjectAt(int position)
+    {
+        return subjects.get(position);
+    }
+
     class SubjectHolder extends RecyclerView.ViewHolder
     {
         private TextView textViewTitle;
