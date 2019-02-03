@@ -96,7 +96,7 @@ public class OpenCamera extends AppCompatActivity {
         setContentView(R.layout.open_camera);
         CamBtnListener();
         ScheduleBtn = findViewById(R.id.btnSchedule);
-        ScheduleBtn.setOnClickListener(new BtoNewAct(this, List.class));
+        ScheduleBtn.setOnClickListener(new BtoNewAct(this, Schedule.class));
     }
 
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
