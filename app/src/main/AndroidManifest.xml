@@ -14,9 +14,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".application.activity.AddSubject"
-            android:parentActivityName=".application.activity.Schedule"
+            android:parentActivityName=".application.activity.Schedule" />
+        <activity android:name=".application.activity.Schedule"
             android:launchMode="singleTop"/>
-        <activity android:name=".application.activity.Schedule" />
         <activity android:name=".application.activity.ShowPicture" />
         <activity android:name=".application.activity.List" />
         <activity android:name=".application.activity.MainActivity">

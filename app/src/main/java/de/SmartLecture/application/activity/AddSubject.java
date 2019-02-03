@@ -11,6 +11,11 @@ import android.widget.NumberPicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import de.SmartLecture.R;
 
 import static java.lang.String.format;
@@ -35,10 +40,14 @@ public class AddSubject extends AppCompatActivity {
         timePickerStart = findViewById(R.id.date_start_picker);
         timePickerStart.setIs24HourView(true);
         timePickerEnd = findViewById(R.id.date_end_picker);
+        timePickerEnd.setIs24HourView(true);
+
+        timePickerStart.setHour(8); timePickerStart.setMinute(0);
+        timePickerEnd.setHour(10); timePickerEnd.setMinute(0);
 
 
-
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        getSupportActionBar().setHomeAsUpIndicator(0);
+        getSupportActionBar().setHomeActionContentDescription(0);
         setTitle("Add Subject");
     }
 
@@ -46,10 +55,8 @@ public class AddSubject extends AppCompatActivity {
     {
         String title = editTextTitle.getText().toString();
         String day = editTextDay.getText().toString();
-        //String dateStart = day+" 08:00";
-        //String dateEnd = day + " 10:00";
-        String dateStart = String.format("%02d:%02d", timePickerStart.getHour(), timePickerStart.getMinute());
-        String dateEnd = String.format("%02d:%02d", timePickerStart.getHour()+2, timePickerStart.getMinute());
+        String dateStart = day + " "+  String.format("%02d:%02d", timePickerStart.getHour(), timePickerStart.getMinute());
+        String dateEnd = day + " "+  String.format("%02d:%02d", timePickerEnd.getHour(), timePickerEnd.getMinute());
 
         if(title.trim().isEmpty())
         {
