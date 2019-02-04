@@ -1,7 +1,9 @@
 package de.SmartLecture.application.helper;
 
+import android.net.sip.SipSession;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubjectHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SubjectHolder holder, int position) {
         Subject currentSubject = subjects.get(position);
         holder.textViewTitle.setText(currentSubject.getTitle());
         holder.textViewDateEnd.setText(currentSubject.getDateEnd());
@@ -36,29 +38,32 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
         return subjects.size();
     }
 
-    public void setSubjects(List<Subject> subjects)
-    {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
         notifyDataSetChanged();
     }
 
-    public Subject getSubjectAt(int position)
-    {
+    public Subject getSubjectAt(int position) {
         return subjects.get(position);
     }
 
-    class SubjectHolder extends RecyclerView.ViewHolder
-    {
+    public class SubjectHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         private TextView textViewTitle;
         private TextView textViewDateStart;
         private TextView textViewDateEnd;
 
-        public SubjectHolder(View itemView)
-        {
+        public SubjectHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDateStart = itemView.findViewById(R.id.text_view_date_start);
             textViewDateEnd = itemView.findViewById(R.id.text_view_date_end);
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(this.getAdapterPosition(), R.id.option_edit,   0,"Edit");
+            menu.add(this.getAdapterPosition(), R.id.option_delete, 0,"Delete");
         }
     }
 }

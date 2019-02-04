@@ -20,7 +20,8 @@ import de.SmartLecture.R;
 
 import static java.lang.String.format;
 
-public class AddSubject extends AppCompatActivity {
+public class AddEditSubject extends AppCompatActivity {
+    public static final String EXTRA_ID = "SmartLecture.EXTRA_ID";
     public static final String EXTRA_TITLE = "SmartLecture.EXTRA_TITLE";
     public static final String EXTRA_DATE_START = "SmartLecture.EXTRA_DATE_START";
     public static final String EXTRA_DATE_END = "SmartLecture.EXTRA_DATE_END";
@@ -48,7 +49,18 @@ public class AddSubject extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(0);
         getSupportActionBar().setHomeActionContentDescription(0);
-        setTitle("Add Subject");
+
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_ID))
+        {
+            setTitle("Edit Subject");
+            editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            editTextDay.setText((intent.getStringExtra(EXTRA_DATE_START)).substring(0,3));
+        }
+        else{
+            setTitle("Add Subject");
+        }
+
     }
 
     private void saveSubject()
@@ -72,6 +84,12 @@ public class AddSubject extends AppCompatActivity {
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DATE_START, dateStart);
         data.putExtra(EXTRA_DATE_END, dateEnd);
+
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if(id != -1)
+        {
+            data.putExtra(EXTRA_ID,id);
+        }
 
         setResult(RESULT_OK, data);
         finish();

@@ -1,7 +1,6 @@
 package de.SmartLecture.application.activity;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,29 +11,28 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
+
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import de.SmartLecture.R;
 import de.SmartLecture.application.helper.Subject;
 import de.SmartLecture.application.helper.SubjectAdapter;
 import de.SmartLecture.application.helper.SubjectViewModel;
-import de.SmartLecture.application.helper.sweetArrayAdapter;
-import de.SmartLecture.domain.Lecture.Lecture;
-import de.SmartLecture.domain.helper.Weekday;
 
 public class Schedule extends AppCompatActivity {
-    public static final int ADD_SUBJECT_REQUEST = 2;
+    public static final int ADD_SUBJECT_REQUEST = 3;
+    public static final int EDIT_SUBJECT_REQUEST = 4;
+    public static final String LOG_TAG = "MyLog";
 
     private SubjectViewModel subjectViewModel;
+    private SubjectAdapter subjectAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class Schedule extends AppCompatActivity {
         btnAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Schedule.this, AddSubject.class);
+                Intent intent = new Intent(Schedule.this, AddEditSubject.class);
                 startActivityForResult(intent, ADD_SUBJECT_REQUEST);
             }
         });
@@ -54,18 +52,46 @@ public class Schedule extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        final SubjectAdapter adapter = new SubjectAdapter();
-        recyclerView.setAdapter(adapter);
-
+        subjectAdapter = new SubjectAdapter();
+        recyclerView.setAdapter(subjectAdapter);
 
         subjectViewModel = ViewModelProviders.of(this).get(SubjectViewModel.class);
         subjectViewModel.getAllSubjects().observe(this, new Observer<List<Subject>>() {
             @Override
             public void onChanged(@Nullable List<Subject> subjects) {
-                adapter.setSubjects(subjects);
+                subjectAdapter.setSubjects(subjects);
             }
         });
+        registerForContextMenu(recyclerView);
+        onSwipe(subjectAdapter, recyclerView);
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int position = item.getGroupId();
+        Log.i("MyLog", ""+position);
+        Subject subject = subjectAdapter.getSubjectAt(position);
+        switch (item.getItemId())
+        {
+            case R.id.option_edit:
+
+                Intent intent = new Intent(Schedule.this, AddEditSubject.class);
+                intent.putExtra(AddEditSubject.EXTRA_ID, subject.getId());
+                intent.putExtra(AddEditSubject.EXTRA_TITLE, subject.getTitle());
+                intent.putExtra(AddEditSubject.EXTRA_DATE_START, subject.getDateStart());
+                startActivityForResult(intent, EDIT_SUBJECT_REQUEST);
+                return true;
+            case R.id.option_delete:
+                subjectViewModel.delete(subjectAdapter.getSubjectAt(position));
+
+                return true;
+            default:
+                    return super.onContextItemSelected(item);
+        }
+    }
+
+    private void onSwipe(final SubjectAdapter adapter, RecyclerView recyclerView)
+    {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
@@ -85,15 +111,29 @@ public class Schedule extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_SUBJECT_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddSubject.EXTRA_TITLE);
-            String dateStart = data.getStringExtra(AddSubject.EXTRA_DATE_START);
-            String dateEnd = data.getStringExtra(AddSubject.EXTRA_DATE_END);
+            String title = data.getStringExtra(AddEditSubject.EXTRA_TITLE);
+            String dateStart = data.getStringExtra(AddEditSubject.EXTRA_DATE_START);
+            String dateEnd = data.getStringExtra(AddEditSubject.EXTRA_DATE_END);
 
             Subject subject = new Subject(title, dateStart, dateEnd);
             subjectViewModel.insert(subject);
 
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else if (requestCode == EDIT_SUBJECT_REQUEST && resultCode == RESULT_OK)
+        {
+            int id = data.getIntExtra(AddEditSubject.EXTRA_ID, -1);
+            // maybe put a check
+            String title = data.getStringExtra(AddEditSubject.EXTRA_TITLE);
+            String dateStart = data.getStringExtra(AddEditSubject.EXTRA_DATE_START);
+            String dateEnd = data.getStringExtra(AddEditSubject.EXTRA_DATE_END);
+
+            Subject subject = new Subject(title, dateStart, dateEnd);
+            subject.setId(id);
+            subjectViewModel.update(subject);
+            Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
+        }
+        else {
             Toast.makeText(this, "Discarded", Toast.LENGTH_SHORT).show();
         }
     }

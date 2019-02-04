@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".application.activity.AddSubject"
+        <activity android:name=".application.activity.AddEditSubject"
             android:parentActivityName=".application.activity.Schedule" />
         <activity android:name=".application.activity.Schedule"
             android:launchMode="singleTop"/>
