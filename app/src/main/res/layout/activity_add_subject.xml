@@ -1,137 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="0dp"
+    tools:context=".application.activity.AddEditSubject">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@android:color/white"
         android:background="@android:color/holo_blue_light"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@android:color/white">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <TextView
+    <EditText
+        android:id="@+id/edit_text_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Subjects"
-        android:gravity = "center"
-        android:id="@+id/toolbar_title" />
+        android:layout_height="wrap_content"
+        android:hint="Subject"
+        android:inputType="text" />
 
-</android.support.v7.widget.Toolbar>
+    <EditText
+        android:id="@+id/edit_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Day"
+        android:inputType="text"/>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="667dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-        tools:context=".application.activity.AddEditSubject">
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/top_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-
-        <EditText
-            android:id="@+id/edit_text_title"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/edit_date_start"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Subject"
-            android:inputType="text" />
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Start"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/edit_day"
-            android:layout_width="match_parent"
+        <TimePicker
+            android:id="@+id/date_start_picker"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Day"
-            android:inputType="text" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/edit_date_start"
+            android:foregroundGravity="right"
+            android:timePickerMode="spinner"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/top_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        </TimePicker>
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/bottom_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/edit_date_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="8dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Start"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/edit_date_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toStartOf="@id/text_view_date_end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="End"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TimePicker
-                android:id="@+id/date_start_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_toStartOf="@id/edit_date_start"
-                android:foregroundGravity="right"
-                android:timePickerMode="spinner"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <TimePicker
+            android:id="@+id/date_end_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/edit_date_end"
+            android:timePickerMode="spinner"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            </TimePicker>
-        </android.support.constraint.ConstraintLayout>
+        </TimePicker>
+    </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/bottom_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/edit_date_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="8dp"
-                android:layout_toStartOf="@id/text_view_date_end"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="End"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TimePicker
-                android:id="@+id/date_end_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_toStartOf="@id/edit_date_end"
-                android:timePickerMode="spinner"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </TimePicker>
-        </android.support.constraint.ConstraintLayout>
-
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
