@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -38,9 +37,6 @@ public class AddEditSubject extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_subject);
 
-        TextView toolbarTitle = findViewById(R.id.toolbar_title);
-
-
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,12 +57,12 @@ public class AddEditSubject extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_ID))
         {
-            toolbarTitle.setText("Edit Subject");
+            setTitle("Edit Subject");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDay.setText((intent.getStringExtra(EXTRA_DATE_START)).substring(0,3));
         }
         else{
-            toolbarTitle.setText("Add Subject");
+            setTitle("Add Subject");
         }
 
     }
