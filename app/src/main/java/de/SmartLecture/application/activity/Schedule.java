@@ -39,10 +39,6 @@ public class Schedule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        setTitle("SmartLecture");
-
         FloatingActionButton btnAddSubject = findViewById(R.id.button_add_subject);
         btnAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +60,6 @@ public class Schedule extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Subject> subjects) {
                 subjectAdapter.setSubjects(subjects);
-                //subjectAdapter.submitList(subjects);
             }
         });
         registerForContextMenu(recyclerView);
