@@ -57,7 +57,7 @@ public class ShowPicture extends AppCompatActivity {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state))
         {
-            File root = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES);
+            File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
             String folder = FolderNameGenerator.generateFolderName();
             File dir = new File(root.getAbsolutePath() + "/SmartLecture/"+ folder);

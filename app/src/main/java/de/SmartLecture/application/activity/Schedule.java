@@ -21,6 +21,7 @@ import android.view.View;
 
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.List;
 
 import de.SmartLecture.R;
@@ -68,19 +69,17 @@ public class Schedule extends AppCompatActivity {
         });
         registerForContextMenu(recyclerView);
         onSwipe(subjectAdapter, recyclerView);
+
         subjectAdapter.setOnItemClickListener(new SubjectAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Subject subject) {
-                //Intent intent = new Intent(OpenCamera, 1);
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                //Intent intent = new Intent(Intent.ACTION_VIEW);
 
-                Uri uri = Uri.parse(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)
-                        .getAbsolutePath()/* + "/SmartLecture"*/);
-                //Uri uri = Uri.parse(Environment.getRootDirectory()+"/SmartLecture");
-                intent.setDataAndType(uri, "jpg/png");
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                Uri uri = Uri.parse(Environment.DIRECTORY_PICTURES
+                        +"/SmartLecture/");
+                intent.setDataAndType(uri, "*/*");
                 startActivity(intent);
-                //startActivity(Intent.createChooser(intent, "Open folder"));
             }
         });
     }
