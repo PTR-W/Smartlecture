@@ -15,28 +15,28 @@ import java.util.List;
 
 import de.SmartLecture.R;
 
-//public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectHolder> {
-public class SubjectAdapter extends ListAdapter<Subject, SubjectAdapter.SubjectHolder> {
+public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectHolder> {
+//public class SubjectAdapter extends ListAdapter<Subject, SubjectAdapter.SubjectHolder> {
 
-    //private List<Subject> subjects = new ArrayList<>();
+    private List<Subject> subjects = new ArrayList<>();
     private OnItemClickListener listener;
 
-    public SubjectAdapter() {
-        super(DIFF_CALLBACK);
-    }
-    private static final DiffUtil.ItemCallback<Subject> DIFF_CALLBACK = new DiffUtil.ItemCallback<Subject>() {
-        @Override
-        public boolean areItemsTheSame(Subject oldItem, Subject newItem) {
-            return oldItem.getId() == newItem.getId();
-        }
-
-        @Override
-        public boolean areContentsTheSame(Subject oldItem, Subject newItem) {
-            return oldItem.getTitle().equals(newItem.getTitle())
-                && oldItem.getDateStart().equals(newItem.getDateStart())
-                && oldItem.getDateEnd().equals(newItem.getDateEnd());
-        }
-    };
+//    public SubjectAdapter() {
+//        super(DIFF_CALLBACK);
+//    }
+//    private static final DiffUtil.ItemCallback<Subject> DIFF_CALLBACK = new DiffUtil.ItemCallback<Subject>() {
+//        @Override
+//        public boolean areItemsTheSame(Subject oldItem, Subject newItem) {
+//            return oldItem.getId() == newItem.getId();
+//        }
+//
+//        @Override
+//        public boolean areContentsTheSame(Subject oldItem, Subject newItem) {
+//            return oldItem.getTitle().equals(newItem.getTitle())
+//                && oldItem.getDateStart().equals(newItem.getDateStart())
+//                && oldItem.getDateEnd().equals(newItem.getDateEnd());
+//        }
+//    };
 
     @NonNull
     @Override
@@ -47,26 +47,26 @@ public class SubjectAdapter extends ListAdapter<Subject, SubjectAdapter.SubjectH
 
     @Override
     public void onBindViewHolder(@NonNull final SubjectHolder holder, int position) {
-        //Subject currentSubject = subjects.get(position);
-        Subject currentSubject = getItem(position);
+        Subject currentSubject = subjects.get(position);
+        //Subject currentSubject = getItem(position);
         holder.textViewTitle.setText(currentSubject.getTitle());
         holder.textViewDateEnd.setText(currentSubject.getDateEnd());
         holder.textViewDateStart.setText(currentSubject.getDateStart());
     }
 
-//    @Override
-//    public int getItemCount() {
-//        return subjects.size();
-//    }
-//
-//    public void setSubjects(List<Subject> subjects) {
-//        this.subjects = subjects;
-//        notifyDataSetChanged();
-//    }
+    @Override
+    public int getItemCount() {
+        return subjects.size();
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
+        notifyDataSetChanged();
+    }
 
     public Subject getSubjectAt(int position) {
-//        return subjects.get(position);
-        return getItem(position);
+        return subjects.get(position);
+        //return getItem(position);
     }
 
     public class SubjectHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, View.OnClickListener {
@@ -95,8 +95,8 @@ public class SubjectAdapter extends ListAdapter<Subject, SubjectAdapter.SubjectH
         public void onClick(View v) {
             if (listener != null)
             {
-                listener.OnItemClick(getItem(getAdapterPosition()));
-//                listener.OnItemClick(subjects.get(getAdapterPosition()));
+                //listener.OnItemClick(getItem(getAdapterPosition()));
+                listener.OnItemClick(subjects.get(getAdapterPosition()));
             }
         }
     }
