@@ -1,5 +1,6 @@
 package de.SmartLecture.application.activity;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -39,14 +41,13 @@ public class Schedule extends AppCompatActivity {
     private SubjectViewModel subjectViewModel;
     private SubjectAdapter subjectAdapter;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        setTitle("SmartLecture");
+
 
         FloatingActionButton btnAddSubject = findViewById(R.id.button_add_subject);
         btnAddSubject.setOnClickListener(new View.OnClickListener() {
