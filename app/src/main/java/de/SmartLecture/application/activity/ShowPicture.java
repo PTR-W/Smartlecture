@@ -19,7 +19,6 @@ import java.io.IOException;
 import de.SmartLecture.R;
 import de.SmartLecture.application.helper.FolderNameGenerator;
 
-import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class ShowPicture extends AppCompatActivity {
 
@@ -66,7 +65,9 @@ public class ShowPicture extends AppCompatActivity {
             int trimEnd = filePath.lastIndexOf(".");
             String imageFileName= filePath.substring(trimStart, trimEnd);
             Log.i(LOG_TAG, imageFileName);
-            File file = new File(root.getAbsolutePath() + "/SmartLecture/"+folder +"/"+imageFileName+".jpg");
+            File file = new File(root.getAbsolutePath() + "/SmartLecture/"+folder +imageFileName+".jpg");
+            //Uri uri = FileProvider.getUriForFile(ShowPicture.this, "de.SmartLecture.provider",new File(root.getAbsolutePath() + "/SmartLecture/"+folder +imageFileName+".jpg"));
+            Log.i("MyLog", root.getAbsolutePath() + "/SmartLecture/"+folder +imageFileName+".jpg");
 
             try
             {
