@@ -16,7 +16,10 @@ public interface PhotoDAO {
     void insert(Photo photo);
     @Delete
     void delete(Photo photo);
-    @Query("SELECT * FROM photo_table WHERE subject = :SubjectName")
-    LiveData<List<Photo>> getPhotos(String SubjectName);
 
+    @Query("SELECT * FROM photo_table")
+    LiveData<List<Photo>> getAllPhotos();
+
+    @Query("SELECT * FROM photo_table WHERE subject = :subjectName")
+    LiveData<List<Photo>> findPhoto(String subjectName);
 }

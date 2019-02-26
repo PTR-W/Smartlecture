@@ -3,7 +3,7 @@
     <string name="execute">Ausführen</string>
     <string name="nameofLecture">Name der Vorlesung</string>
     <string name="weekday">Wochentag</string>
-    <string name="btnSchedule">Edit Schedule</string>
+    <string name="btnSchedule">Schedule</string>
     <string name="time">00:00</string>
     <string name="btnCamera">New Picture</string>
     <string name="title_activity_show_picture">ShowPicture</string>

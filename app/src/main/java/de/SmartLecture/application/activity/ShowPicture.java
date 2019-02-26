@@ -1,5 +1,6 @@
 package de.SmartLecture.application.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrix;
@@ -18,11 +19,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import de.SmartLecture.R;
 import de.SmartLecture.application.helper.FolderNameGenerator;
+import de.SmartLecture.application.helper.Photo;
+import de.SmartLecture.application.helper.PhotoViewModel;
+
 
 
 public class ShowPicture extends AppCompatActivity {
 
     private ImageView image;
+    private PhotoViewModel photoViewModel;
     public static final String LOG_TAG = "MyLog";
 
     @Override
@@ -76,6 +81,7 @@ public class ShowPicture extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
                 ostream.close();
+                saveToDb(file.getPath());
             }
             catch(FileNotFoundException e)
             {
@@ -91,5 +97,12 @@ public class ShowPicture extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"CHECK STORAGE", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private void saveToDb(String path)
+    {
+        photoViewModel = ViewModelProviders.of(this).get(PhotoViewModel.class);
+        Photo photo = new Photo(path, "Java");
+        photoViewModel.insert(photo);
     }
 }

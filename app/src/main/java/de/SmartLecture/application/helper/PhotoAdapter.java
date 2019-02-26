@@ -1,15 +1,14 @@
 package de.SmartLecture.application.helper;
 
+import java.util.List;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
+import java.util.ArrayList;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.view.LayoutInflater;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 
 import de.SmartLecture.R;
 
@@ -26,9 +25,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
     @Override
     public void onBindViewHolder(@NonNull final PhotoHolder holder, int position) {
         Photo currentPhoto = photos.get(position);
-        holder.imageView.setImageURI(Uri.parse(
-                "/storage/emulated/0/Pictures"+
-                "/SmartLecture/Sat/IMG_20190223_143509_8932319127060920295.jpg"));
+        holder.imageView.setImageURI(Uri.parse(currentPhoto.getFileName()));
 
     }
 

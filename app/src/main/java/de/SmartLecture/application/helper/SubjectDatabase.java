@@ -1,12 +1,12 @@
 package de.SmartLecture.application.helper;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.content.Context;
 import android.os.AsyncTask;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.db.SupportSQLiteDatabase;
 
 import de.SmartLecture.application.DAO.PhotoDAO;
 import de.SmartLecture.application.DAO.SubjectDAO;
@@ -16,7 +16,6 @@ import de.SmartLecture.application.DAO.SubjectDAO;
 public abstract class SubjectDatabase extends RoomDatabase {
 
     private static SubjectDatabase instance;
-
     public abstract SubjectDAO subjectDAO();
     public abstract PhotoDAO photoDAO();
 
@@ -54,9 +53,6 @@ public abstract class SubjectDatabase extends RoomDatabase {
             subjectDAO.insert(new Subject("IT-Recht", "Mon 08:00", "Mon 10:00"));
             subjectDAO.insert(new Subject("Algorithmen", "Mon 10:00", "Mon 14:00"));
             subjectDAO.insert(new Subject("Java", "Wed 10:00", "Wed 12:00"));
-            photoDAO.insert(new Photo(
-                    "Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)/SmartLecture/Sat/IMG_20190223_143509_8932319127060920295.jpg"
-            ,"abc"));
             return null;
         }
     }

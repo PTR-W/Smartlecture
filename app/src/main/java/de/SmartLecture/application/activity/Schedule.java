@@ -77,15 +77,9 @@ public class Schedule extends AppCompatActivity {
             @Override
             public void OnItemClick(Subject subject) {
 
-
                 Intent intent = new Intent(Schedule.this, ViewPhotos.class);
-                //intent.setAction(Intent.ACTION_VIEW);
-                //intent.setAction(Intent.ACTION_PICK);
-                //intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                //Uri uri = Uri.parse(PICTURES_DIR);
-                //intent.setDataAndType(uri, "image/jpg");
-                //intent.setData(uri);
+                intent.putExtra(ViewPhotos.EXTRA_PHOTO_SUBJECT, subject.getTitle());
+                Log.i("MyLog", subject.getTitle());
                 startActivity(intent);
             }
         });
@@ -94,7 +88,7 @@ public class Schedule extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = item.getGroupId();
-        Log.i("MyLog", ""+position);
+        //Log.i("MyLog", ""+position);
         Subject subject = subjectAdapter.getSubjectAt(position);
         switch (item.getItemId())
         {

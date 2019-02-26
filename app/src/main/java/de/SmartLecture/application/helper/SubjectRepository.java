@@ -1,11 +1,9 @@
 package de.SmartLecture.application.helper;
 
+import java.util.List;
+import android.os.AsyncTask;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.os.AsyncTask;
-
-import java.nio.channels.AsynchronousChannelGroup;
-import java.util.List;
 
 import de.SmartLecture.application.DAO.SubjectDAO;
 
