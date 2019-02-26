@@ -12,16 +12,15 @@ import de.SmartLecture.application.DAO.PhotoDAO;
 public class PhotoRepository{
     private PhotoDAO photoDAO;
     private LiveData<List<Photo>> allPhotos;
-    private LiveData<List<Photo>> searchResults;
+    private MutableLiveData<List<Photo>> searchResults = new MutableLiveData<>();
 
     public PhotoRepository(Application application){
         SubjectDatabase database = SubjectDatabase.getInstance(application);
         photoDAO = database.photoDAO();
         allPhotos = photoDAO.getAllPhotos();
     }
-
     public LiveData<List<Photo>> getAllPhotos() { return allPhotos; }
-    public LiveData<List<Photo>> getSearchResults(){return searchResults;}
+    public MutableLiveData<List<Photo>> getSearchResults(){return searchResults;}
     public void insert(Photo photo)
     {
         new InsertPhotoAsyncTask(photoDAO).execute(photo);
@@ -39,9 +38,9 @@ public class PhotoRepository{
 //        return photos;
 //    }
 
-    private void asyncFinished(LiveData<List<Photo>> result)
+    private void asyncFinished(List<Photo> result)
     {
-        searchResults = result;
+        searchResults.setValue(result);
     }
 
     private static class InsertPhotoAsyncTask extends AsyncTask<Photo, Void, Void> {
@@ -70,7 +69,7 @@ public class PhotoRepository{
         }
     }
 
-    private static class QueryPhotoAsyncTask extends AsyncTask<String, Void, LiveData<List<Photo>>> {
+    private static class QueryPhotoAsyncTask extends AsyncTask<String, Void, List<Photo>> {
         private PhotoDAO photoDAO;
         private PhotoRepository delegate = null;
         private QueryPhotoAsyncTask(PhotoDAO photoDAO){
@@ -78,11 +77,11 @@ public class PhotoRepository{
         }
 
         @Override
-        protected LiveData<List<Photo>> doInBackground(String... subjectName){
+        protected List<Photo> doInBackground(String... subjectName){
             return photoDAO.findPhoto(subjectName[0]);
         }
 
-        @Override protected void onPostExecute(LiveData<List<Photo>> result)
+        @Override protected void onPostExecute(List<Photo> result)
         {
             delegate.asyncFinished(result);
         }

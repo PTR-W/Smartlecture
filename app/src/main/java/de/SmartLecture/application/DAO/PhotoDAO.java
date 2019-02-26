@@ -21,5 +21,5 @@ public interface PhotoDAO {
     LiveData<List<Photo>> getAllPhotos();
 
     @Query("SELECT * FROM photo_table WHERE subject = :subjectName")
-    LiveData<List<Photo>> findPhoto(String subjectName);
+    List<Photo> findPhoto(String subjectName);
 }

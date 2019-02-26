@@ -26,6 +26,8 @@ import java.io.File;
 import java.util.List;
 
 import de.SmartLecture.R;
+import de.SmartLecture.application.helper.Photo;
+import de.SmartLecture.application.helper.PhotoViewModel;
 import de.SmartLecture.application.helper.Subject;
 import de.SmartLecture.application.helper.SubjectAdapter;
 import de.SmartLecture.application.helper.SubjectViewModel;
@@ -40,6 +42,7 @@ public class Schedule extends AppCompatActivity {
             +"/SmartLecture/";
 
     private SubjectViewModel subjectViewModel;
+    private PhotoViewModel photoViewModel;
     private SubjectAdapter subjectAdapter;
 
     @Override

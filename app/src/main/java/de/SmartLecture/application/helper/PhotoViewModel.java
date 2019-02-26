@@ -9,13 +9,13 @@ import android.arch.lifecycle.AndroidViewModel;
 
 public class PhotoViewModel extends AndroidViewModel {
     private PhotoRepository photoRepository;
-    private LiveData<List<Photo>> allphotos;
-    private LiveData<List<Photo>> searchResults;
+    private LiveData<List<Photo>> allPhotos;
+    private MutableLiveData<List<Photo>> searchResults;
 
     public PhotoViewModel(@NonNull Application application) {
         super(application);
         photoRepository = new PhotoRepository(application);
-        allphotos = photoRepository.getAllPhotos();
+        allPhotos = photoRepository.getAllPhotos();
         searchResults = photoRepository.getSearchResults();
     }
 
@@ -27,8 +27,8 @@ public class PhotoViewModel extends AndroidViewModel {
     {
         photoRepository.insert(photo);
     }
-    public LiveData<List<Photo>> getSearchResults(){ return searchResults; }
-    public LiveData<List<Photo>> getAllPhotos(){return allphotos; }
+    public MutableLiveData<List<Photo>> getSearchResults(){ return searchResults; }
+    public LiveData<List<Photo>> getAllPhotos(){return allPhotos; }
     public void findPhoto(String subjectName){photoRepository.findPhoto(subjectName);}
 
 }
