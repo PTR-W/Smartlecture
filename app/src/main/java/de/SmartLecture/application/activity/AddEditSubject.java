@@ -23,6 +23,7 @@ import static java.lang.String.format;
 public class AddEditSubject extends AppCompatActivity {
     public static final String EXTRA_ID = "SmartLecture.EXTRA_ID";
     public static final String EXTRA_TITLE = "SmartLecture.EXTRA_TITLE";
+    public static final String EXTRA_DAY = "SmartLecture.EXTRA_DAY";
     public static final String EXTRA_DATE_START = "SmartLecture.EXTRA_DATE_START";
     public static final String EXTRA_DATE_END = "SmartLecture.EXTRA_DATE_END";
 
@@ -55,7 +56,7 @@ public class AddEditSubject extends AppCompatActivity {
         {
             setTitle("Edit Subject");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
-            editTextDay.setText((intent.getStringExtra(EXTRA_DATE_START)).substring(0,3));
+            editTextDay.setText(intent.getStringExtra(EXTRA_DAY));
         }
         else{
             setTitle("Add Subject");
@@ -67,8 +68,8 @@ public class AddEditSubject extends AppCompatActivity {
     {
         String title = editTextTitle.getText().toString();
         String day = editTextDay.getText().toString();
-        String dateStart = day + " "+  String.format("%02d:%02d", timePickerStart.getHour(), timePickerStart.getMinute());
-        String dateEnd = day + " "+  String.format("%02d:%02d", timePickerEnd.getHour(), timePickerEnd.getMinute());
+        String dateStart = String.format("%02d:%02d", timePickerStart.getHour(), timePickerStart.getMinute());
+        String dateEnd = String.format("%02d:%02d", timePickerEnd.getHour(), timePickerEnd.getMinute());
 
         if(title.trim().isEmpty())
         {
@@ -82,6 +83,7 @@ public class AddEditSubject extends AppCompatActivity {
         }
         Intent data = new Intent();
         data.putExtra(EXTRA_TITLE, title);
+        data.putExtra(EXTRA_DAY, day);
         data.putExtra(EXTRA_DATE_START, dateStart);
         data.putExtra(EXTRA_DATE_END, dateEnd);
 
@@ -90,10 +92,8 @@ public class AddEditSubject extends AppCompatActivity {
         {
             data.putExtra(EXTRA_ID,id);
         }
-
         setResult(RESULT_OK, data);
         finish();
-
     }
 
     @Override
@@ -112,6 +112,5 @@ public class AddEditSubject extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 }

@@ -27,8 +27,8 @@ public class PhotoViewModel extends AndroidViewModel {
     {
         photoRepository.insert(photo);
     }
-    public MutableLiveData<List<Photo>> getSearchResults(){ return searchResults; }
     public LiveData<List<Photo>> getAllPhotos(){return allPhotos; }
+    public MutableLiveData<List<Photo>> getSearchResults(){ return searchResults; }
     public void findPhoto(String subjectName){photoRepository.findPhoto(subjectName);}
 
 }

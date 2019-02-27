@@ -3,12 +3,9 @@ package de.SmartLecture.application.activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,28 +18,20 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Toast;
-
-import java.io.File;
 import java.util.List;
 
 import de.SmartLecture.R;
-import de.SmartLecture.application.helper.Photo;
-import de.SmartLecture.application.helper.PhotoViewModel;
 import de.SmartLecture.application.helper.Subject;
 import de.SmartLecture.application.helper.SubjectAdapter;
 import de.SmartLecture.application.helper.SubjectViewModel;
 
-import static android.os.Environment.DIRECTORY_PICTURES;
-
 public class Schedule extends AppCompatActivity {
     public static final int ADD_SUBJECT_REQUEST = 3;
     public static final int EDIT_SUBJECT_REQUEST = 4;
-    public static final String LOG_TAG = "MyLog";
     private static final String PICTURES_DIR = android.os.Environment.DIRECTORY_PICTURES
             +"/SmartLecture/";
 
     private SubjectViewModel subjectViewModel;
-    private PhotoViewModel photoViewModel;
     private SubjectAdapter subjectAdapter;
 
     @Override
@@ -91,7 +80,6 @@ public class Schedule extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = item.getGroupId();
-        //Log.i("MyLog", ""+position);
         Subject subject = subjectAdapter.getSubjectAt(position);
         switch (item.getItemId())
         {
@@ -99,6 +87,7 @@ public class Schedule extends AppCompatActivity {
 
                 Intent intent = new Intent(Schedule.this, AddEditSubject.class);
                 intent.putExtra(AddEditSubject.EXTRA_ID, subject.getId());
+                intent.putExtra(AddEditSubject.EXTRA_DAY, subject.getDay());
                 intent.putExtra(AddEditSubject.EXTRA_TITLE, subject.getTitle());
                 intent.putExtra(AddEditSubject.EXTRA_DATE_START, subject.getDateStart());
                 startActivityForResult(intent, EDIT_SUBJECT_REQUEST);
@@ -134,10 +123,11 @@ public class Schedule extends AppCompatActivity {
 
         if (requestCode == ADD_SUBJECT_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddEditSubject.EXTRA_TITLE);
+            String day = data.getStringExtra(AddEditSubject.EXTRA_DAY);
             String dateStart = data.getStringExtra(AddEditSubject.EXTRA_DATE_START);
             String dateEnd = data.getStringExtra(AddEditSubject.EXTRA_DATE_END);
 
-            Subject subject = new Subject(title, dateStart, dateEnd);
+            Subject subject = new Subject(title, day, dateStart, dateEnd);
             subjectViewModel.insert(subject);
 
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
@@ -147,10 +137,11 @@ public class Schedule extends AppCompatActivity {
             int id = data.getIntExtra(AddEditSubject.EXTRA_ID, -1);
             // maybe put a check
             String title = data.getStringExtra(AddEditSubject.EXTRA_TITLE);
+            String day = data.getStringExtra(AddEditSubject.EXTRA_DAY);
             String dateStart = data.getStringExtra(AddEditSubject.EXTRA_DATE_START);
             String dateEnd = data.getStringExtra(AddEditSubject.EXTRA_DATE_END);
 
-            Subject subject = new Subject(title, dateStart, dateEnd);
+            Subject subject = new Subject(title, day, dateStart, dateEnd);
             subject.setId(id);
             subjectViewModel.update(subject);
             Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();

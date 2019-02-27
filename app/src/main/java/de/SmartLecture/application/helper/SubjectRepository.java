@@ -1,6 +1,8 @@
 package de.SmartLecture.application.helper;
 
 import java.util.List;
+
+import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -10,9 +12,9 @@ import de.SmartLecture.application.DAO.SubjectDAO;
 public class SubjectRepository {
     private SubjectDAO subjectDAO;
     private LiveData<List<Subject>> allSubjects;
+    private MutableLiveData<List<Subject>> searchResults = new MutableLiveData<>();
 
-    public SubjectRepository(Application application)
-    {
+    public SubjectRepository(Application application) {
         SubjectDatabase database = SubjectDatabase.getInstance(application);
         subjectDAO = database.subjectDAO();
         allSubjects = subjectDAO.getAllSubjects();
@@ -37,6 +39,36 @@ public class SubjectRepository {
     public LiveData<List<Subject>> getAllSubjects()
     {
         return allSubjects;
+    }
+    public MutableLiveData<List<Subject>> getSearchResults(){return searchResults;}
+
+    public void findSubject(String day, String time){
+        QuerySubjectAsyncTask task = new QuerySubjectAsyncTask(subjectDAO);
+        task.delegate = this;
+        task.execute(day,time);
+    }
+
+    private void asyncFinished(List<Subject> result)
+    {
+        searchResults.setValue(result);
+    }
+
+    private static class QuerySubjectAsyncTask extends AsyncTask<String, Void, List<Subject>> {
+        private SubjectDAO subjectDAO;
+        private SubjectRepository delegate = null;
+        private QuerySubjectAsyncTask(SubjectDAO subjectDAO){
+            this.subjectDAO = subjectDAO;
+        }
+
+        @Override
+        protected List<Subject> doInBackground(String... params){
+            return subjectDAO.findSubject(params[0], params[1]);
+        }
+
+        @Override protected void onPostExecute(List<Subject> result)
+        {
+            delegate.asyncFinished(result);
+        }
     }
 
     private static class InsertSubjectAsyncTask extends AsyncTask<Subject, Void , Void>

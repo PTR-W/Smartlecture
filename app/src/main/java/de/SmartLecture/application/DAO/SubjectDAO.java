@@ -27,4 +27,7 @@ public interface SubjectDAO {
 
     @Query("SELECT * FROM subject_table ORDER BY dateStart")
     LiveData<List<Subject>> getAllSubjects();
+
+    @Query("SELECT * FROM subject_table WHERE day = :day AND :time BETWEEN dateStart AND dateEnd LIMIT 1")
+    List<Subject> findSubject(String day, String time);
 }

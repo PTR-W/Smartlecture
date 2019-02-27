@@ -15,8 +15,8 @@ import de.SmartLecture.R;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectHolder> {
 
-    private List<Subject> subjects = new ArrayList<>();
     private OnItemClickListener listener;
+    private List<Subject> subjects = new ArrayList<>();
 
     @NonNull
     @Override
@@ -31,6 +31,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
         Subject currentSubject = subjects.get(position);;
         holder.textViewTitle.setText(currentSubject.getTitle());
         holder.textViewDateEnd.setText(currentSubject.getDateEnd());
+        holder.textViewDay.setText(currentSubject.getDay());
         holder.textViewDateStart.setText(currentSubject.getDateStart());
     }
 
@@ -51,12 +52,14 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
 
     public class SubjectHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         private TextView textViewTitle;
+        private TextView textViewDay;
         private TextView textViewDateStart;
         private TextView textViewDateEnd;
 
         public SubjectHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
+            textViewDay = itemView.findViewById(R.id.text_view_day);
             textViewDateStart = itemView.findViewById(R.id.text_view_date_start);
             textViewDateEnd = itemView.findViewById(R.id.text_view_date_end);
             itemView.setOnCreateContextMenuListener(this);

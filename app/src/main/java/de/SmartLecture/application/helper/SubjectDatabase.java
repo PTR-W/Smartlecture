@@ -41,18 +41,16 @@ public abstract class SubjectDatabase extends RoomDatabase {
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>
     {
         private SubjectDAO subjectDAO;
-        private PhotoDAO photoDAO;
         private PopulateDbAsyncTask(SubjectDatabase db)
         {
             subjectDAO = db.subjectDAO();
-            photoDAO = db.photoDAO();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            subjectDAO.insert(new Subject("IT-Recht", "Mon 08:00", "Mon 10:00"));
-            subjectDAO.insert(new Subject("Algorithmen", "Mon 10:00", "Mon 14:00"));
-            subjectDAO.insert(new Subject("Java", "Wed 10:00", "Wed 12:00"));
+            subjectDAO.insert(new Subject("IT-Recht", "Mon", "08:00", "10:00"));
+            subjectDAO.insert(new Subject("Algorithmen", "Mon", "10:00", "14:00"));
+            subjectDAO.insert(new Subject("Java", "Wed","10:00", "12:00"));
             return null;
         }
     }

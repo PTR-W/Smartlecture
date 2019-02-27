@@ -1,11 +1,10 @@
 package de.SmartLecture.application.helper;
 
 import java.util.List;
-
-import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import de.SmartLecture.application.DAO.PhotoDAO;
 
@@ -14,7 +13,7 @@ public class PhotoRepository{
     private LiveData<List<Photo>> allPhotos;
     private MutableLiveData<List<Photo>> searchResults = new MutableLiveData<>();
 
-    public PhotoRepository(Application application){
+    PhotoRepository(Application application){
         SubjectDatabase database = SubjectDatabase.getInstance(application);
         photoDAO = database.photoDAO();
         allPhotos = photoDAO.getAllPhotos();
@@ -31,12 +30,6 @@ public class PhotoRepository{
         task.delegate = this;
         task.execute(subjectName);
     }
-
-//    public LiveData<List<Photo>> getPhotos(String subjectName)
-//    {
-//        new QueryPhotoAsyncTask(photoDAO).execute(subjectName);
-//        return photos;
-//    }
 
     private void asyncFinished(List<Photo> result)
     {
