@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
-import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,8 +41,7 @@ public class ShowPicture extends AppCompatActivity {
     private String dbFilePath = "";
     private String path;
     private ImageView image;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +76,6 @@ public class ShowPicture extends AppCompatActivity {
                         0, 0, 0, 1, 0 });             // Alpha
                 image.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
                 Log.i(LOG_TAG, ""+contrastFactor);
-                //contrastFactor = contrastProgress;
             }
 
             @Override
@@ -120,26 +117,13 @@ public class ShowPicture extends AppCompatActivity {
             String imageFileName= filePath.substring(trimStart, trimEnd);
             File file = new File(root.getAbsolutePath() + "/SmartLecture/" +imageFileName+".jpg");
 
-            ///
             image.setDrawingCacheEnabled(true);
-
             image.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
             image.layout(0, 0, image.getMeasuredWidth(), image.getMeasuredHeight());
-
             image.buildDrawingCache(true);
             Bitmap bitmap = Bitmap.createBitmap(image.getDrawingCache());
             image.setDrawingCacheEnabled(false); // clear drawing cache
-
-            ///
-
-//            image.setDrawingCacheEnabled(true);
-//            image.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-//                    View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
-//            image.layout(0,0,image.getMeasuredWidth(), image.getMeasuredHeight());
-//            image.buildDrawingCache(true);
-//            Bitmap bitmap = Bitmap.createBitmap(image.getDrawingCache());
-//            image.setDrawingCacheEnabled(false);
 
             try
             {
