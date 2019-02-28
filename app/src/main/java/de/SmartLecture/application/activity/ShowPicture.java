@@ -2,6 +2,7 @@ package de.SmartLecture.application.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ImageView;
 import android.support.v7.app.AppCompatActivity;
@@ -25,16 +31,18 @@ import java.util.List;
 
 import de.SmartLecture.R;
 import de.SmartLecture.application.helper.Photo;
-import de.SmartLecture.application.helper.PhotoViewModel;
-import de.SmartLecture.application.helper.FolderNameGenerator;
 import de.SmartLecture.application.helper.Subject;
+import de.SmartLecture.application.helper.PhotoViewModel;
 import de.SmartLecture.application.helper.SubjectViewModel;
 
 public class ShowPicture extends AppCompatActivity {
 
     public static final String LOG_TAG = "MyLog";
     private String subjectName = "Default";
-    private String mfilePath = "";
+    private String dbFilePath = "";
+    private String path;
+    private ImageView image;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,26 +50,62 @@ public class ShowPicture extends AppCompatActivity {
         setContentView(R.layout.show_picture);
         Bundle extras = this.getIntent().getExtras();
 
-        // Contrast
-        ColorMatrix colorMatrix = new ColorMatrix();
-        float ContrastFactor = 1.2f;
-        colorMatrix.set(new float[] {
-                ContrastFactor, 0, 0, 0, 0,   // Red
-                0, ContrastFactor, 0, 0, 0,   // Green
-                0, 0, ContrastFactor, 0, 0,   // Blue
-                0, 0, 0, 1, 0 });             // Alpha
-
-        ImageView image;
-        if (extras != null)
-        {
-            String path = extras.getString("filename");
-            image= findViewById(R.id.image);
-            image.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+        if (extras != null) {
+            path = extras.getString("filename");
+            image = findViewById(R.id.image);
+            setContrast();
             image.setImageURI(Uri.parse(path));
-            saveImage(path);
         }
     }
 
+    private void setContrast(){
+        SeekBar contrastBar = findViewById(R.id.contrast_bar);
+        int contrastMin = 0;
+        int contrastMax = 100;
+        int contrastCurrent = 50;
+        contrastBar.setMax(contrastMax-contrastMin);
+        contrastBar.setProgress(contrastCurrent- contrastMin);
+
+        contrastBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                ColorMatrix colorMatrix = new ColorMatrix();
+                float contrastFactor = (progress+50)/100f;
+                colorMatrix.set(new float[] {
+                        contrastFactor, 0, 0, 0, 0,   // Red
+                        0, contrastFactor, 0, 0, 0,   // Green
+                        0, 0, contrastFactor, 0, 0,   // Blue
+                        0, 0, 0, 1, 0 });             // Alpha
+                image.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+                Log.i(LOG_TAG, ""+contrastFactor);
+                //contrastFactor = contrastProgress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.save_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_icon:
+                saveImage(path);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     private void saveImage(String filePath)
     {
         String state = Environment.getExternalStorageState();
@@ -69,24 +113,40 @@ public class ShowPicture extends AppCompatActivity {
         if (Environment.MEDIA_MOUNTED.equals(state))
         {
             File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-            String folder = FolderNameGenerator.generateFolderName();
-            File dir = new File(root.getAbsolutePath() + "/SmartLecture/"+ folder);
+            File dir = new File(root.getAbsolutePath() + "/SmartLecture/");
             dir.mkdirs();
             int trimStart = filePath.lastIndexOf("/");
             int trimEnd = filePath.lastIndexOf(".");
             String imageFileName= filePath.substring(trimStart, trimEnd);
-            File file = new File(root.getAbsolutePath() + "/SmartLecture/"+folder +imageFileName+".jpg");
+            File file = new File(root.getAbsolutePath() + "/SmartLecture/" +imageFileName+".jpg");
+
+            ///
+            image.setDrawingCacheEnabled(true);
+
+            image.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            image.layout(0, 0, image.getMeasuredWidth(), image.getMeasuredHeight());
+
+            image.buildDrawingCache(true);
+            Bitmap bitmap = Bitmap.createBitmap(image.getDrawingCache());
+            image.setDrawingCacheEnabled(false); // clear drawing cache
+
+            ///
+
+//            image.setDrawingCacheEnabled(true);
+//            image.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+//                    View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
+//            image.layout(0,0,image.getMeasuredWidth(), image.getMeasuredHeight());
+//            image.buildDrawingCache(true);
+//            Bitmap bitmap = Bitmap.createBitmap(image.getDrawingCache());
+//            image.setDrawingCacheEnabled(false);
 
             try
             {
-                file.createNewFile();
                 FileOutputStream oStream = new FileOutputStream(file);
-                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, oStream);
                 oStream.close();
-                mfilePath = file.getPath();
-                //saveToDb(file.getPath(),subjectName);
+                dbFilePath = file.getPath();
             }
             catch(FileNotFoundException e)
             {
@@ -101,6 +161,9 @@ public class ShowPicture extends AppCompatActivity {
         {
             Toast.makeText(getApplicationContext(),"CHECK STORAGE", Toast.LENGTH_LONG).show();
         }
+
+        Intent intent = new Intent(ShowPicture.this, OpenCamera.class);
+        startActivity(intent);
     }
 
     private void getSubjectName(){
@@ -110,18 +173,17 @@ public class ShowPicture extends AppCompatActivity {
         Date date = new Date();
         String day = dayFormat.format(date);
         String time = timeFormat.format(date);
-        Log.i(LOG_TAG,  day);
         subjectViewModel.findSubject(day, time);
         subjectViewModel.getSearchResults().observe(this, new Observer<List<Subject>>() {
             @Override
             public void onChanged(@Nullable List<Subject> subjects) {
                 if (subjects.size() > 0) {
                     subjectName = subjects.get(0).getTitle();
-                    saveToDb(mfilePath, subjectName);
+                    saveToDb(dbFilePath, subjectName);
                 }
                 else{
                     subjectName = "Default";
-                    saveToDb(mfilePath, subjectName);
+                    saveToDb(dbFilePath, subjectName);
                 }
             }
         });

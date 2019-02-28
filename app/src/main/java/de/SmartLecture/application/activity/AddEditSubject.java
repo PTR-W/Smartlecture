@@ -99,14 +99,14 @@ public class AddEditSubject extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_subject_menu, menu);
+        menuInflater.inflate(R.menu.save_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.save_subject:
+            case R.id.save_icon:
                 saveSubject();
                 return true;
             default:
