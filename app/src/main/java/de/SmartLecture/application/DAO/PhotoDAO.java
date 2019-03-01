@@ -20,6 +20,9 @@ public interface PhotoDAO {
     @Query("SELECT * FROM photo_table")
     LiveData<List<Photo>> getAllPhotos();
 
+//    @Query("SELECT * FROM photo_table WHERE id = :id")
+//    List<Photo> getPhotoById(String id);
+
     @Query("SELECT * FROM photo_table WHERE subject = :subjectName ORDER BY id DESC")
     List<Photo> findPhoto(String subjectName);
 }

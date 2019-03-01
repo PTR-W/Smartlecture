@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -21,7 +20,6 @@ import java.util.Locale;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import de.SmartLecture.R;
 import de.SmartLecture.application.listener.BtoNewAct;
@@ -101,7 +99,7 @@ public class OpenCamera extends AppCompatActivity {
 
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            Intent showPictureIntent = new Intent(this, ShowPicture.class);
+            Intent showPictureIntent = new Intent(this, SavePicture.class);
             showPictureIntent.putExtra("filename", imageFilePath);
             startActivity(showPictureIntent);
         }

@@ -62,8 +62,8 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
             textViewDay = itemView.findViewById(R.id.text_view_day);
             textViewDateStart = itemView.findViewById(R.id.text_view_date_start);
             textViewDateEnd = itemView.findViewById(R.id.text_view_date_end);
-            itemView.setOnCreateContextMenuListener(this);
 
+            itemView.setOnCreateContextMenuListener(this);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -28,8 +28,6 @@ import de.SmartLecture.application.helper.SubjectViewModel;
 public class Schedule extends AppCompatActivity {
     public static final int ADD_SUBJECT_REQUEST = 3;
     public static final int EDIT_SUBJECT_REQUEST = 4;
-    private static final String PICTURES_DIR = android.os.Environment.DIRECTORY_PICTURES
-            +"/SmartLecture/";
 
     private SubjectViewModel subjectViewModel;
     private SubjectAdapter subjectAdapter;

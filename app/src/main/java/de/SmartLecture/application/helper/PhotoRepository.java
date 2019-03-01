@@ -30,6 +30,11 @@ public class PhotoRepository{
         task.delegate = this;
         task.execute(subjectName);
     }
+//    public void getPhotoById(String id){
+//        GetPhotoAsyncTask task = new GetPhotoAsyncTask(photoDAO);
+//        task.delegate = this;
+//        task.execute(id);
+//    }
 
     private void asyncFinished(List<Photo> result)
     {
@@ -79,4 +84,22 @@ public class PhotoRepository{
             delegate.asyncFinished(result);
         }
     }
+
+//    private static class GetPhotoAsyncTask extends AsyncTask<String, Void, List<Photo>> {
+//        private PhotoDAO photoDAO;
+//        private PhotoRepository delegate = null;
+//        private GetPhotoAsyncTask(PhotoDAO photoDAO){
+//            this.photoDAO = photoDAO;
+//        }
+//
+//        @Override
+//        protected List<Photo> doInBackground(String... id){
+//            return photoDAO.getPhotoById(id[0]);
+//        }
+//
+//        @Override protected void onPostExecute(List<Photo> result)
+//        {
+//            delegate.asyncFinished(result);
+//        }
+//    }
 }

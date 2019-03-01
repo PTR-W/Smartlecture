@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.SmartLecture.R;
 import de.SmartLecture.application.helper.Photo;
@@ -34,23 +35,23 @@ import de.SmartLecture.application.helper.Subject;
 import de.SmartLecture.application.helper.PhotoViewModel;
 import de.SmartLecture.application.helper.SubjectViewModel;
 
-public class ShowPicture extends AppCompatActivity {
+public class SavePicture extends AppCompatActivity {
 
     public static final String LOG_TAG = "MyLog";
     private String subjectName = "Default";
     private String dbFilePath = "";
     private String path;
     private ImageView image;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.show_picture);
+        setContentView(R.layout.activity_save_picture);
         Bundle extras = this.getIntent().getExtras();
 
         if (extras != null) {
             path = extras.getString("filename");
-            image = findViewById(R.id.image);
+            image = findViewById(R.id.save_picture_image);
             setContrast();
             image.setImageURI(Uri.parse(path));
         }
@@ -63,7 +64,6 @@ public class ShowPicture extends AppCompatActivity {
         int contrastCurrent = 50;
         contrastBar.setMax(contrastMax-contrastMin);
         contrastBar.setProgress(contrastCurrent- contrastMin);
-
         contrastBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -75,7 +75,6 @@ public class ShowPicture extends AppCompatActivity {
                         0, 0, contrastFactor, 0, 0,   // Blue
                         0, 0, 0, 1, 0 });             // Alpha
                 image.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
-                Log.i(LOG_TAG, ""+contrastFactor);
             }
 
             @Override
@@ -118,8 +117,7 @@ public class ShowPicture extends AppCompatActivity {
             File file = new File(root.getAbsolutePath() + "/SmartLecture/" +imageFileName+".jpg");
 
             image.setDrawingCacheEnabled(true);
-            image.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            image.measure(View.MeasureSpec.makeMeasureSpec(image.getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(image.getHeight(), View.MeasureSpec.EXACTLY));
             image.layout(0, 0, image.getMeasuredWidth(), image.getMeasuredHeight());
             image.buildDrawingCache(true);
             Bitmap bitmap = Bitmap.createBitmap(image.getDrawingCache());
@@ -146,17 +144,15 @@ public class ShowPicture extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"CHECK STORAGE", Toast.LENGTH_LONG).show();
         }
 
-        Intent intent = new Intent(ShowPicture.this, OpenCamera.class);
+        Intent intent = new Intent(SavePicture.this, OpenCamera.class);
         startActivity(intent);
     }
 
     private void getSubjectName(){
         SubjectViewModel subjectViewModel = ViewModelProviders.of(this ).get(SubjectViewModel.class) ;
-        SimpleDateFormat dayFormat = new SimpleDateFormat("EEE");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        String day = dayFormat.format(date);
-        String time = timeFormat.format(date);
+        String day = new SimpleDateFormat("EEE", Locale.getDefault()).format(date);
+        String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date);
         subjectViewModel.findSubject(day, time);
         subjectViewModel.getSearchResults().observe(this, new Observer<List<Subject>>() {
             @Override
@@ -172,7 +168,6 @@ public class ShowPicture extends AppCompatActivity {
             }
         });
     }
-
     private void saveToDb(String path, String subjectName)
     {
         PhotoViewModel photoViewModel = ViewModelProviders.of(this).get(PhotoViewModel.class);
