@@ -8,4 +8,6 @@
     <string name="btnCamera">New Picture</string>
     <string name="title_activity_show_picture">ShowPicture</string>
     <string name="title_activity_schedule">Schedule</string>
+    <string name="lectureyouarein">Lecture that is currently on:</string>
+    <string name="nocurrentlect">Nothing to worry about :)</string>
 </resources>

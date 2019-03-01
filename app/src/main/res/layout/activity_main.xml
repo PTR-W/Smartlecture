@@ -6,33 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".application.activity.MainActivity">
 
+    <Button
+            android:layout_width="123dp"
+            android:layout_height="63dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="68dp"
+            android:text="@string/btnSchedule"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Widget.AppCompat.Button.Colored" android:textColor="@android:color/background_light"
+            android:background="@color/design_default_color_primary"
+            android:id="@+id/btnSchedule"
+            app:layout_constraintStart_toEndOf="@+id/btnCamera" android:layout_marginStart="8dp"/>
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/constLectureyouarein"
+            android:layout_width="359dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/lectureyouarein"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:textSize="24sp"
+            android:textAlignment="center"/>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/execute"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            android:layout_width="123dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="68dp"
+            android:text="@string/btnCamera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.AppCompat.Button.Colored" android:textColor="@android:color/background_light"
+            android:background="@color/design_default_color_primary"
+            app:layout_constraintHorizontal_bias="0.176" android:id="@+id/btnCamera"/>
+    <TextView
+            android:text="@string/nocurrentlect"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:id="@+id/currentLecture"
+            app:layout_constraintTop_toBottomOf="@+id/constLectureyouarein"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:textSize="24sp"
+            android:textColor="@color/colorPrimary" android:textStyle="bold"/>
+    <ImageView
+            android:layout_width="299dp"
+            android:layout_height="313dp" app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/logo" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/currentLecture" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnCamera" app:layout_constraintVertical_bias="0.527"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
