@@ -10,4 +10,5 @@
     <string name="title_activity_schedule">Schedule</string>
     <string name="lectureyouarein">Lecture that is currently on:</string>
     <string name="nocurrentlect">Nothing to worry about :)</string>
+    <string name="mainlogo">This is the main Logo of Smartlecture</string>
 </resources>
