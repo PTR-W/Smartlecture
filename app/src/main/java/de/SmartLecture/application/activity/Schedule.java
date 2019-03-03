@@ -20,10 +20,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import de.SmartLecture.R;
-import de.SmartLecture.application.helper.PhotoViewModel;
-import de.SmartLecture.application.helper.Subject;
-import de.SmartLecture.application.helper.SubjectAdapter;
-import de.SmartLecture.application.helper.SubjectViewModel;
+import de.SmartLecture.application.helper.*;
 
 public class Schedule extends AppCompatActivity {
     public static final int ADD_SUBJECT_REQUEST = 3;
@@ -81,16 +78,28 @@ public class Schedule extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.option_edit:
+                if (subject.getTitle().equals("Default"))
+                {
+                    Toast.makeText(Schedule.this, "Can not edit Default folder", Toast.LENGTH_SHORT).show();
+                }
+                else {
 
-                Intent intent = new Intent(Schedule.this, AddEditSubject.class);
-                intent.putExtra(AddEditSubject.EXTRA_ID, subject.getId());
-                intent.putExtra(AddEditSubject.EXTRA_DAY, subject.getDay());
-                intent.putExtra(AddEditSubject.EXTRA_TITLE, subject.getTitle());
-                intent.putExtra(AddEditSubject.EXTRA_DATE_START, subject.getDateStart());
-                startActivityForResult(intent, EDIT_SUBJECT_REQUEST);
+                    Intent intent = new Intent(Schedule.this, AddEditSubject.class);
+                    intent.putExtra(AddEditSubject.EXTRA_ID, subject.getId());
+                    intent.putExtra(AddEditSubject.EXTRA_DAY, subject.getDay());
+                    intent.putExtra(AddEditSubject.EXTRA_TITLE, subject.getTitle());
+                    intent.putExtra(AddEditSubject.EXTRA_DATE_START, subject.getDateStart());
+                    startActivityForResult(intent, EDIT_SUBJECT_REQUEST);
+                }
                 return true;
             case R.id.option_delete:
-                subjectViewModel.delete(subjectAdapter.getSubjectAt(position));
+                if (subject.getTitle().equals("Default"))
+                {
+                    Toast.makeText(Schedule.this, "Can not delete Default folder", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    subjectViewModel.delete(subjectAdapter.getSubjectAt(position));
+                }
 
                 return true;
             default:
@@ -108,8 +117,21 @@ public class Schedule extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                subjectViewModel.delete(adapter.getSubjectAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(Schedule.this, "Deleted", Toast.LENGTH_SHORT).show();
+                Subject subject = adapter.getSubjectAt(viewHolder.getAdapterPosition());
+                if(subject.getTitle().equals("Default"))
+                {
+                    Toast.makeText(Schedule.this, "Can not delete Default folder", Toast.LENGTH_SHORT).show();
+                    subjectViewModel.getAllSubjects().observe(Schedule.this, new Observer<List<Subject>>() {
+                        @Override
+                        public void onChanged(@Nullable List<Subject> subjects) {
+                            subjectAdapter.setSubjects(subjects);
+                        }
+                    });
+                }
+                else {
+                    subjectViewModel.delete(subject);
+                    Toast.makeText(Schedule.this, subject.getTitle(), Toast.LENGTH_SHORT).show();
+                }
             }
         }).attachToRecyclerView(recyclerView);
     }
