@@ -9,40 +9,40 @@ import android.arch.lifecycle.LiveData;
 
 import de.SmartLecture.application.DAO.SubjectDAO;
 
-public class SubjectRepository {
+class SubjectRepository {
     private SubjectDAO subjectDAO;
     private LiveData<List<Subject>> allSubjects;
     private MutableLiveData<List<Subject>> searchResults = new MutableLiveData<>();
 
-    public SubjectRepository(Application application) {
+    SubjectRepository(Application application) {
         SubjectDatabase database = SubjectDatabase.getInstance(application);
         subjectDAO = database.subjectDAO();
         allSubjects = subjectDAO.getAllSubjects();
     }
 
-    public void insert(Subject subject)
+    void insert(Subject subject)
     {
         new InsertSubjectAsyncTask(subjectDAO).execute(subject);
     }
-    public void update(Subject subject)
+    void update(Subject subject)
     {
         new UpdateSubjectAsyncTask(subjectDAO).execute(subject);
     }
-    public void delete(Subject subject)
+    void delete(Subject subject)
     {
         new DeleteSubjectAsyncTask(subjectDAO).execute(subject);
     }
-    public void deleteAllSubjects()
+    void deleteAllSubjects()
     {
         new DeleteAllSubjectsAsyncTask(subjectDAO).execute();
     }
-    public LiveData<List<Subject>> getAllSubjects()
+    LiveData<List<Subject>> getAllSubjects()
     {
         return allSubjects;
     }
-    public MutableLiveData<List<Subject>> getSearchResults(){return searchResults;}
+    MutableLiveData<List<Subject>> getSearchResults(){return searchResults;}
 
-    public void findSubject(String day, String time){
+    void findSubject(String day, String time){
         QuerySubjectAsyncTask task = new QuerySubjectAsyncTask(subjectDAO);
         task.delegate = this;
         task.execute(day,time);

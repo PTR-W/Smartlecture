@@ -8,7 +8,6 @@ import android.view.View;
 public class BtoNewAct implements View.OnClickListener {
 
     private Class dest;
-
     private AppCompatActivity sourceAct;
 
     public BtoNewAct(AppCompatActivity sourceAct, Class dest) {

@@ -47,7 +47,6 @@ public class AddEditSubject extends AppCompatActivity {
         timePickerStart.setHour(8); timePickerStart.setMinute(0);
         timePickerEnd.setHour(10); timePickerEnd.setMinute(0);
 
-
         getSupportActionBar().setHomeAsUpIndicator(0);
         getSupportActionBar().setHomeActionContentDescription(0);
 
@@ -61,7 +60,6 @@ public class AddEditSubject extends AppCompatActivity {
         else{
             setTitle("Add Subject");
         }
-
     }
 
     private void saveSubject()

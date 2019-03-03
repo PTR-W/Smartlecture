@@ -8,27 +8,27 @@ import android.arch.lifecycle.MutableLiveData;
 
 import de.SmartLecture.application.DAO.PhotoDAO;
 
-public class PhotoRepository{
-    private PhotoDAO photoDAO;
-    private LiveData<List<Photo>> allPhotos;
-    private MutableLiveData<List<Photo>> searchResults = new MutableLiveData<>();
+    class PhotoRepository {
+        private PhotoDAO photoDAO;
+        private LiveData<List<Photo>> allPhotos;
+        private MutableLiveData<List<Photo>> searchResults = new MutableLiveData<>();
 
-    PhotoRepository(Application application){
-        SubjectDatabase database = SubjectDatabase.getInstance(application);
-        photoDAO = database.photoDAO();
-        allPhotos = photoDAO.getAllPhotos();
+        PhotoRepository(Application application){
+            SubjectDatabase database = SubjectDatabase.getInstance(application);
+            photoDAO = database.photoDAO();
+            allPhotos = photoDAO.getAllPhotos();
     }
-    public LiveData<List<Photo>> getAllPhotos() { return allPhotos; }
-    public MutableLiveData<List<Photo>> getSearchResults(){return searchResults;}
-    public void insert(Photo photo)
+        LiveData<List<Photo>> getAllPhotos() { return allPhotos; }
+        MutableLiveData<List<Photo>> getSearchResults(){return searchResults;}
+        void insert(Photo photo)
     {
         new InsertPhotoAsyncTask(photoDAO).execute(photo);
     }
-    public void delete(Photo photo) { new DeletePhotoAsyncTask(photoDAO).execute(photo); }
-    public void findPhoto(String subjectName){
-        QueryPhotoAsyncTask task = new QueryPhotoAsyncTask(photoDAO);
-        task.delegate = this;
-        task.execute(subjectName);
+        void delete(Photo photo) { new DeletePhotoAsyncTask(photoDAO).execute(photo); }
+        void findPhoto(String subjectName){
+            QueryPhotoAsyncTask task = new QueryPhotoAsyncTask(photoDAO);
+            task.delegate = this;
+            task.execute(subjectName);
     }
 //    public void getPhotoById(String id){
 //        GetPhotoAsyncTask task = new GetPhotoAsyncTask(photoDAO);

@@ -28,7 +28,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
     @Override
     public void onBindViewHolder(@NonNull final SubjectHolder holder, int position) {
 
-        Subject currentSubject = subjects.get(position);;
+        Subject currentSubject = subjects.get(position);
         holder.textViewTitle.setText(currentSubject.getTitle());
         holder.textViewDateEnd.setText(currentSubject.getDateEnd());
         holder.textViewDay.setText(currentSubject.getDay());
@@ -56,7 +56,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
         private TextView textViewDateStart;
         private TextView textViewDateEnd;
 
-        public SubjectHolder(View itemView) {
+        SubjectHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDay = itemView.findViewById(R.id.text_view_day);

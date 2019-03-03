@@ -30,5 +30,4 @@ public class PhotoViewModel extends AndroidViewModel {
     public LiveData<List<Photo>> getAllPhotos(){return allPhotos; }
     public MutableLiveData<List<Photo>> getSearchResults(){ return searchResults; }
     public void findPhoto(String subjectName){photoRepository.findPhoto(subjectName);}
-
 }

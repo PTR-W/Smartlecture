@@ -3,7 +3,6 @@ package de.SmartLecture.application.helper;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-
 @Entity(tableName = "subject_table")
 public class Subject {
 

@@ -28,7 +28,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
     public void onBindViewHolder(@NonNull final PhotoHolder holder, int position) {
         Photo currentPhoto = photos.get(position);
         holder.imageView.setImageURI(Uri.parse(currentPhoto.getFileName()));
-
     }
 
     @Override
@@ -49,7 +48,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder>
     class PhotoHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         private ImageView imageView;
 
-        public PhotoHolder(@NonNull View itemView) {
+        PhotoHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.photo_item_view);
 

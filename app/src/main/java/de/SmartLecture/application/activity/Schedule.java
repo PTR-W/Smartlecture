@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -69,7 +68,6 @@ public class Schedule extends AppCompatActivity {
 
                 Intent intent = new Intent(Schedule.this, ViewPhotos.class);
                 intent.putExtra(ViewPhotos.EXTRA_PHOTO_SUBJECT, subject.getTitle());
-                Log.i("MyLog", subject.getTitle());
                 startActivity(intent);
             }
         });

@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 public class SubjectViewModel extends AndroidViewModel {
-
     private SubjectRepository subjectRepository;
     private LiveData<List<Subject>> allSubjects;
     private MutableLiveData<List<Subject>> searchResults;
@@ -43,6 +42,4 @@ public class SubjectViewModel extends AndroidViewModel {
     }
     public MutableLiveData<List<Subject>> getSearchResults(){ return searchResults; }
     public void findSubject(String day, String time){subjectRepository.findSubject(day, time);}
-
-
 }

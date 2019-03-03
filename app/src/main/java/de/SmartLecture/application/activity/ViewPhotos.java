@@ -2,6 +2,7 @@ package de.SmartLecture.application.activity;
 
 import java.util.List;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 import android.content.Intent;
@@ -18,11 +19,12 @@ import de.SmartLecture.application.helper.Photo;
 import de.SmartLecture.application.helper.PhotoAdapter;
 import de.SmartLecture.application.helper.PhotoViewModel;
 
-public class ViewPhotos extends AppCompatActivity {
+public class ViewPhotos extends AppCompatActivity implements EditPhoto.FragmentListener {
     public static final String EXTRA_PHOTO_SUBJECT = "SmartLecture.EXTRA_PHOTO_SUBJECT";
     private PhotoAdapter photoAdapter;
     private PhotoViewModel photoViewModel;
     private Intent intent;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class ViewPhotos extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = item.getGroupId();
-        Photo photo = photoAdapter.getPhotoAt(position);
         switch (item.getItemId())
         {
             case R.id.option_delete:
@@ -73,17 +74,25 @@ public class ViewPhotos extends AppCompatActivity {
                 photoViewModel.findPhoto(intent.getStringExtra(EXTRA_PHOTO_SUBJECT));
 
             case R.id.option_edit:
-//                    Intent intent = new Intent(ViewPhotos.this, AddEditSubject.class);
+
+                fragment = new EditPhoto();
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.view_photos_container, fragment).commit();
+//                    Intent intent = new Intent(ViewPhotos.this, EditPhoto.class);
+//                    Photo photo = photoAdapter.getPhotoAt(position);
 //                    intent.putExtra(AddEditSubject.EXTRA_ID, .getId());
 //                    intent.putExtra(AddEditSubject.EXTRA_DAY, subject.getDay());
 //                    intent.putExtra(AddEditSubject.EXTRA_TITLE, subject.getTitle());
 //                    intent.putExtra(AddEditSubject.EXTRA_DATE_START, subject.getDateStart());
-//                    startActivityForResult(intent, EDIT_SUBJECT_REQUEST);
-//                    return true;
-
-                return true;
+//                    startActivity(intent);
+                      return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public void onInputSent(String input) {
+        Log.i("MyLog", input);
     }
 }
