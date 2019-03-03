@@ -27,10 +27,8 @@ public class PhotoViewModel extends AndroidViewModel {
     {
         photoRepository.insert(photo);
     }
-    public void update(Photo photo)
-    {
-        photoRepository.update(photo);
-    }
+    public void update(Photo photo) { photoRepository.update(photo); }
+    public void deleteAllPhotos() {photoRepository.deleteAllPhotos();}
     public LiveData<List<Photo>> getAllPhotos(){return allPhotos; }
     public MutableLiveData<List<Photo>> getSearchResults(){ return searchResults; }
     public void findPhoto(String subjectName){photoRepository.findPhoto(subjectName);}

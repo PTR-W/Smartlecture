@@ -47,9 +47,7 @@ public abstract class SubjectDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            subjectDAO.insert(new Subject("Default", "", "08:00", "10:00"));
-            subjectDAO.insert(new Subject("Algorithmen", "Mon", "10:00", "14:00"));
-            subjectDAO.insert(new Subject("Java", "Wed","10:00", "12:00"));
+            subjectDAO.insert(new Subject("Default", "", "", ""));
             return null;
         }
     }

@@ -26,7 +26,6 @@ import de.SmartLecture.application.listener.BtoNewAct;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String LOG_TAG = "MyLog";
     private static final int CAMERA_REQUEST = 1;
     private static final int PERMISSION_REQUEST = 2;
     private static String EXTRA_TEMP_FILE_PATH;
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
 
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
         String imageFileName = "IMG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);

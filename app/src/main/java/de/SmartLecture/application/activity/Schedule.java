@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import de.SmartLecture.R;
+import de.SmartLecture.application.helper.PhotoViewModel;
 import de.SmartLecture.application.helper.Subject;
 import de.SmartLecture.application.helper.SubjectAdapter;
 import de.SmartLecture.application.helper.SubjectViewModel;
@@ -158,8 +159,10 @@ public class Schedule extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_all_btn:
+                PhotoViewModel photoViewModel = ViewModelProviders.of(this).get(PhotoViewModel.class);
+                photoViewModel.deleteAllPhotos();
                 subjectViewModel.deleteAllSubjects();
-                Toast.makeText(Schedule.this, "Exterminated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Schedule.this, "Deleted", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

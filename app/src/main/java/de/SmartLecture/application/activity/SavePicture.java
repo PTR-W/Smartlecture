@@ -151,8 +151,8 @@ public class SavePicture extends AppCompatActivity {
     private void getSubjectName(){
         SubjectViewModel subjectViewModel = ViewModelProviders.of(this ).get(SubjectViewModel.class) ;
         Date date = new Date();
-        String day = new SimpleDateFormat("EEE", Locale.getDefault()).format(date);
-        String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date);
+        String day = new SimpleDateFormat("EEE", Locale.ENGLISH).format(date);
+        String time = new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date);
         subjectViewModel.findSubject(day, time);
         subjectViewModel.getSearchResults().observe(this, new Observer<List<Subject>>() {
             @Override

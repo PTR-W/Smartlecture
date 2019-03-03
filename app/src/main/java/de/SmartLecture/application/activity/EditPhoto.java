@@ -17,6 +17,7 @@ public class EditPhoto extends Fragment {
     private FragmentListener listener;
     private EditText editText;
 
+    // Interface to communicate with parent activity
     public interface FragmentListener{
         void onInputSent(String input);
     }
@@ -33,8 +34,10 @@ public class EditPhoto extends Fragment {
             public void onClick(View v) {
                 String input = editText.getText().toString();
                 listener.onInputSent(input);
+                // Hide the Keyboard after button click
                 InputMethodManager softKeyboard = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 softKeyboard.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                // Navigates back to the parent activity
                 getFragmentManager().popBackStack();
                 ((ViewPhotos)getActivity()).setBgVisibility(false);
                 getActivity().getSupportFragmentManager().beginTransaction().remove(EditPhoto.this).commit();

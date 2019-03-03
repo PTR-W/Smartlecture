@@ -15,12 +15,11 @@
         android:hint="Subject"
         android:inputType="text" />
 
-    <EditText
-        android:id="@+id/edit_day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Day"
-        android:inputType="text"/>
+    <Spinner
+            android:id="@+id/day_spinner"
+            android:layout_width="141dp"
+            android:layout_height="wrap_content"
+    />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/top_picker"
