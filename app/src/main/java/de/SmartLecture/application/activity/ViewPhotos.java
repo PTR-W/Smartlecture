@@ -77,7 +77,7 @@ public class ViewPhotos extends AppCompatActivity implements EditPhoto.FragmentL
 
                 fragment = new EditPhoto();
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.view_photos_container, fragment).commit();
+                        replace(R.id.view_photos_container, fragment).addToBackStack("frag").commit();
 //                    Intent intent = new Intent(ViewPhotos.this, EditPhoto.class);
 //                    Photo photo = photoAdapter.getPhotoAt(position);
 //                    intent.putExtra(AddEditSubject.EXTRA_ID, .getId());

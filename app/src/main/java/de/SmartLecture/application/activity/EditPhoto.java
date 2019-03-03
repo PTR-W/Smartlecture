@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,8 @@ public class EditPhoto extends Fragment {
             public void onClick(View v) {
                 String input = editText.getText().toString();
                 listener.onInputSent(input);
-                getFragmentManager().popBackStackImmediate();
-                getActivity().finish();
+                getFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().beginTransaction().remove(EditPhoto.this).commit();
             }
         });
         return view;
