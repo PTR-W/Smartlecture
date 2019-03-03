@@ -42,4 +42,5 @@ public class SubjectViewModel extends AndroidViewModel {
     }
     public MutableLiveData<List<Subject>> getSearchResults(){ return searchResults; }
     public void findSubject(String day, String time){subjectRepository.findSubject(day, time);}
+    public void subjectExists(String subject) {subjectRepository.subjectExists(subject);}
 }

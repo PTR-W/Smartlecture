@@ -22,11 +22,14 @@ public interface SubjectDAO {
     @Delete
     void delete (Subject subject);
 
-    @Query("DELETE FROM subject_table")
-    void deleteAllSubjects();
+    @Query("DELETE FROM subject_table WHERE title != :string ")
+    void deleteAllSubjects(String string);
 
     @Query("SELECT * FROM subject_table ORDER BY dateStart")
     LiveData<List<Subject>> getAllSubjects();
+
+    @Query("SELECT * FROM subject_table WHERE title = :title")
+    List<Subject> existsSubject(String title);
 
     @Query("SELECT * FROM subject_table WHERE day = :day AND :time BETWEEN dateStart AND dateEnd LIMIT 1")
     List<Subject> findSubject(String day, String time);

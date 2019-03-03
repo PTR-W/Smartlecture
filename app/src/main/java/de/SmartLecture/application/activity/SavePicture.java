@@ -144,7 +144,7 @@ public class SavePicture extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"CHECK STORAGE", Toast.LENGTH_LONG).show();
         }
 
-        Intent intent = new Intent(SavePicture.this, Schedule.class);
+        Intent intent = new Intent(SavePicture.this, MainActivity.class);
         startActivity(intent);
     }
 

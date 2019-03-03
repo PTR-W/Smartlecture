@@ -34,7 +34,7 @@ class SubjectRepository {
     }
     void deleteAllSubjects()
     {
-        new DeleteAllSubjectsAsyncTask(subjectDAO).execute();
+        new DeleteAllSubjectsAsyncTask(subjectDAO).execute("Default");
     }
     LiveData<List<Subject>> getAllSubjects()
     {
@@ -43,9 +43,15 @@ class SubjectRepository {
     MutableLiveData<List<Subject>> getSearchResults(){return searchResults;}
 
     void findSubject(String day, String time){
-        QuerySubjectAsyncTask task = new QuerySubjectAsyncTask(subjectDAO);
+        FindSubjectAsyncTask task = new FindSubjectAsyncTask(subjectDAO);
         task.delegate = this;
         task.execute(day,time);
+    }
+
+    void subjectExists(String subject){
+        ExistsSubjectAsyncTask task = new ExistsSubjectAsyncTask(subjectDAO);
+        task.delegate = this;
+        task.execute(subject);
     }
 
     private void asyncFinished(List<Subject> result)
@@ -53,16 +59,34 @@ class SubjectRepository {
         searchResults.setValue(result);
     }
 
-    private static class QuerySubjectAsyncTask extends AsyncTask<String, Void, List<Subject>> {
+    private static class FindSubjectAsyncTask extends AsyncTask<String, Void, List<Subject>> {
         private SubjectDAO subjectDAO;
         private SubjectRepository delegate = null;
-        private QuerySubjectAsyncTask(SubjectDAO subjectDAO){
+        private FindSubjectAsyncTask(SubjectDAO subjectDAO){
             this.subjectDAO = subjectDAO;
         }
 
         @Override
         protected List<Subject> doInBackground(String... params){
             return subjectDAO.findSubject(params[0], params[1]);
+        }
+
+        @Override protected void onPostExecute(List<Subject> result)
+        {
+            delegate.asyncFinished(result);
+        }
+    }
+
+    private static class ExistsSubjectAsyncTask extends AsyncTask<String, Void, List<Subject>> {
+        private SubjectDAO subjectDAO;
+        private SubjectRepository delegate = null;
+        private ExistsSubjectAsyncTask(SubjectDAO subjectDAO){
+            this.subjectDAO = subjectDAO;
+        }
+
+        @Override
+        protected List<Subject> doInBackground(String... params){
+            return subjectDAO.existsSubject(params[0]);
         }
 
         @Override protected void onPostExecute(List<Subject> result)
@@ -119,7 +143,7 @@ class SubjectRepository {
         }
     }
 
-    private static class DeleteAllSubjectsAsyncTask extends AsyncTask<Void, Void , Void>
+    private static class DeleteAllSubjectsAsyncTask extends AsyncTask<String, Void , Void>
     {
         private SubjectDAO subjectDAO;
         private DeleteAllSubjectsAsyncTask(SubjectDAO subjectDAO)
@@ -128,9 +152,9 @@ class SubjectRepository {
         }
 
         @Override
-        protected Void doInBackground(Void... voids)
+        protected Void doInBackground(String... strings)
         {
-            subjectDAO.deleteAllSubjects();
+            subjectDAO.deleteAllSubjects(strings[0]);
             return null;
         }
     }

@@ -114,14 +114,14 @@ public class Schedule extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
 
         if (requestCode == ADD_SUBJECT_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddEditSubject.EXTRA_TITLE);
-            String day = data.getStringExtra(AddEditSubject.EXTRA_DAY);
-            String dateStart = data.getStringExtra(AddEditSubject.EXTRA_DATE_START);
-            String dateEnd = data.getStringExtra(AddEditSubject.EXTRA_DATE_END);
+            String title = intent.getStringExtra(AddEditSubject.EXTRA_TITLE);
+            String day = intent.getStringExtra(AddEditSubject.EXTRA_DAY);
+            String dateStart = intent.getStringExtra(AddEditSubject.EXTRA_DATE_START);
+            String dateEnd = intent.getStringExtra(AddEditSubject.EXTRA_DATE_END);
 
             Subject subject = new Subject(title, day, dateStart, dateEnd);
             subjectViewModel.insert(subject);
@@ -130,12 +130,12 @@ public class Schedule extends AppCompatActivity {
         }
         else if (requestCode == EDIT_SUBJECT_REQUEST && resultCode == RESULT_OK)
         {
-            int id = data.getIntExtra(AddEditSubject.EXTRA_ID, -1);
+            int id = intent.getIntExtra(AddEditSubject.EXTRA_ID, -1);
             // maybe put a check
-            String title = data.getStringExtra(AddEditSubject.EXTRA_TITLE);
-            String day = data.getStringExtra(AddEditSubject.EXTRA_DAY);
-            String dateStart = data.getStringExtra(AddEditSubject.EXTRA_DATE_START);
-            String dateEnd = data.getStringExtra(AddEditSubject.EXTRA_DATE_END);
+            String title = intent.getStringExtra(AddEditSubject.EXTRA_TITLE);
+            String day = intent.getStringExtra(AddEditSubject.EXTRA_DAY);
+            String dateStart = intent.getStringExtra(AddEditSubject.EXTRA_DATE_START);
+            String dateEnd = intent.getStringExtra(AddEditSubject.EXTRA_DATE_END);
 
             Subject subject = new Subject(title, day, dateStart, dateEnd);
             subject.setId(id);

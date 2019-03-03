@@ -1,10 +1,7 @@
 package de.SmartLecture.application.DAO;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.*;
 
 import java.util.List;
 
@@ -16,12 +13,14 @@ public interface PhotoDAO {
     void insert(Photo photo);
     @Delete
     void delete(Photo photo);
+    @Update
+    void update(Photo photo);
+
+    @Query("DELETE FROM photo_table")
+    void deleteAllPhotos();
 
     @Query("SELECT * FROM photo_table")
     LiveData<List<Photo>> getAllPhotos();
-
-//    @Query("SELECT * FROM photo_table WHERE id = :id")
-//    List<Photo> getPhotoById(String id);
 
     @Query("SELECT * FROM photo_table WHERE subject = :subjectName ORDER BY id DESC")
     List<Photo> findPhoto(String subjectName);

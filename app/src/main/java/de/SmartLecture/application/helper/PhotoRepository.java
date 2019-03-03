@@ -24,18 +24,20 @@ import de.SmartLecture.application.DAO.PhotoDAO;
     {
         new InsertPhotoAsyncTask(photoDAO).execute(photo);
     }
+        void update(Photo photo)
+        {
+            new UpdatePhotoAsyncTask(photoDAO).execute(photo);
+        }
         void delete(Photo photo) { new DeletePhotoAsyncTask(photoDAO).execute(photo); }
+        void deleteAllPhotos()
+        {
+            new DeleteAllPhotosAsyncTask(photoDAO).execute();
+        }
         void findPhoto(String subjectName){
-            QueryPhotoAsyncTask task = new QueryPhotoAsyncTask(photoDAO);
+            FindPhotoAsyncTask task = new FindPhotoAsyncTask(photoDAO);
             task.delegate = this;
             task.execute(subjectName);
     }
-//    public void getPhotoById(String id){
-//        GetPhotoAsyncTask task = new GetPhotoAsyncTask(photoDAO);
-//        task.delegate = this;
-//        task.execute(id);
-//    }
-
     private void asyncFinished(List<Photo> result)
     {
         searchResults.setValue(result);
@@ -67,10 +69,35 @@ import de.SmartLecture.application.DAO.PhotoDAO;
         }
     }
 
-    private static class QueryPhotoAsyncTask extends AsyncTask<String, Void, List<Photo>> {
+        private static class UpdatePhotoAsyncTask extends AsyncTask<Photo, Void, Void> {
+            private PhotoDAO photoDAO;
+            private UpdatePhotoAsyncTask(PhotoDAO photoDAO){
+                this.photoDAO = photoDAO;
+            }
+
+            @Override
+            protected Void doInBackground(Photo... photos){
+                photoDAO.update(photos[0]);
+                return null;
+            }
+        }
+        private static class DeleteAllPhotosAsyncTask extends AsyncTask<Void, Void, Void> {
+            private PhotoDAO photoDAO;
+            private DeleteAllPhotosAsyncTask(PhotoDAO photoDAO){
+                this.photoDAO = photoDAO;
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids){
+                photoDAO.deleteAllPhotos();
+                return null;
+            }
+        }
+
+    private static class FindPhotoAsyncTask extends AsyncTask<String, Void, List<Photo>> {
         private PhotoDAO photoDAO;
         private PhotoRepository delegate = null;
-        private QueryPhotoAsyncTask(PhotoDAO photoDAO){
+        private FindPhotoAsyncTask(PhotoDAO photoDAO){
             this.photoDAO = photoDAO;
         }
 
@@ -84,22 +111,4 @@ import de.SmartLecture.application.DAO.PhotoDAO;
             delegate.asyncFinished(result);
         }
     }
-
-//    private static class GetPhotoAsyncTask extends AsyncTask<String, Void, List<Photo>> {
-//        private PhotoDAO photoDAO;
-//        private PhotoRepository delegate = null;
-//        private GetPhotoAsyncTask(PhotoDAO photoDAO){
-//            this.photoDAO = photoDAO;
-//        }
-//
-//        @Override
-//        protected List<Photo> doInBackground(String... id){
-//            return photoDAO.getPhotoById(id[0]);
-//        }
-//
-//        @Override protected void onPostExecute(List<Photo> result)
-//        {
-//            delegate.asyncFinished(result);
-//        }
-//    }
 }

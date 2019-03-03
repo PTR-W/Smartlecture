@@ -12,6 +12,14 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/photo_item"/>
 
+    <RelativeLayout
+            android:id="@+id/view_photos_bg_dim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#C0000000"
+            android:visibility="gone" >
+    </RelativeLayout>
+
     <FrameLayout
             android:id="@+id/view_photos_container"
             android:layout_width="match_parent"

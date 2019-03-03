@@ -20,6 +20,10 @@ public class Photo {
         this.id = id;
     }
 
+    public void setSubject(String subject){
+        this.subject = subject;
+    }
+
     public int getId() {
         return id;
     }
