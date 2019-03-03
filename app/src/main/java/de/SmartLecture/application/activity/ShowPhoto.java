@@ -18,6 +18,7 @@ public class ShowPhoto extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_picture);
+        // Hides the UI
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         decorView.setSystemUiVisibility(uiOptions);
@@ -26,6 +27,7 @@ public class ShowPhoto extends AppCompatActivity {
         Intent intent = getIntent();
         ImageView image = findViewById(R.id.show_picture_image);
         image.setImageURI(Uri.parse(intent.getStringExtra(EXTRA_IMAGE_PATH)));
+        // Sets the picture in full build
         image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         image.setScaleType(ImageView.ScaleType.FIT_XY);
     }

@@ -21,7 +21,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <SeekBar
-        android:id="@+id/contrast_bar"
+        android:id="@+id/brightness_bar"
         android:layout_width="match_parent"
         android:layout_height="28dp"
         android:layout_marginStart="30dp"
@@ -31,16 +31,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/save_picture_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/icon_contrast" />
+        app:layout_constraintStart_toEndOf="@+id/icon_brightness" />
 
     <ImageView
-            android:id="@+id/icon_contrast"
+            android:id="@+id/icon_brightness"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_contrast" android:layout_marginStart="8dp"
+            app:srcCompat="@drawable/ic_brightness" android:layout_marginStart="8dp"
             android:contentDescription="@string/brightness"/>
 
 </android.support.constraint.ConstraintLayout>

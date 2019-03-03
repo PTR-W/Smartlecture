@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,12 +35,11 @@ import de.SmartLecture.application.helper.PhotoViewModel;
 import de.SmartLecture.application.helper.SubjectViewModel;
 
 public class SavePicture extends AppCompatActivity {
-
-    public static final String LOG_TAG = "MyLog";
-    private String subjectName = "Default";
-    private String dbFilePath = "";
     private String path;
     private ImageView image;
+    private String dbFilePath = "";
+    private String subjectName = "Default";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +50,28 @@ public class SavePicture extends AppCompatActivity {
         if (extras != null) {
             path = extras.getString("filename");
             image = findViewById(R.id.save_picture_image);
-            setContrast();
+            setBrightness();
             image.setImageURI(Uri.parse(path));
         }
     }
 
-    private void setContrast(){
-        SeekBar contrastBar = findViewById(R.id.contrast_bar);
-        int contrastMin = 0;
-        int contrastMax = 100;
-        int contrastCurrent = 50;
-        contrastBar.setMax(contrastMax-contrastMin);
-        contrastBar.setProgress(contrastCurrent- contrastMin);
-        contrastBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    // Modifies the brightness of the picture
+    private void setBrightness(){
+        SeekBar brightnessBar = findViewById(R.id.brightness_bar);
+        int brightnessMin = 0;
+        int brightnessMax = 100;
+        int brightnessCurrent = 50;
+        brightnessBar.setMax(brightnessMax-brightnessMin);
+        brightnessBar.setProgress(brightnessCurrent- brightnessMin);
+        brightnessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 ColorMatrix colorMatrix = new ColorMatrix();
-                float contrastFactor = (progress+50)/100f;
+                float brightnessFactor = (progress+50)/100f;
                 colorMatrix.set(new float[] {
-                        contrastFactor, 0, 0, 0, 0,   // Red
-                        0, contrastFactor, 0, 0, 0,   // Green
-                        0, 0, contrastFactor, 0, 0,   // Blue
+                        brightnessFactor, 0, 0, 0, 0,   // Red
+                        0, brightnessFactor, 0, 0, 0,   // Green
+                        0, 0, brightnessFactor, 0, 0,   // Blue
                         0, 0, 0, 1, 0 });             // Alpha
                 image.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
             }
@@ -102,6 +101,8 @@ public class SavePicture extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    //Saves the image file on the internal storage
     private void saveImage(String filePath)
     {
         String state = Environment.getExternalStorageState();
@@ -109,13 +110,12 @@ public class SavePicture extends AppCompatActivity {
         if (Environment.MEDIA_MOUNTED.equals(state))
         {
             File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            File dir = new File(root.getAbsolutePath() + "/SmartLecture/");
-            dir.mkdirs();
             int trimStart = filePath.lastIndexOf("/");
             int trimEnd = filePath.lastIndexOf(".");
             String imageFileName= filePath.substring(trimStart, trimEnd);
             File file = new File(root.getAbsolutePath() + "/SmartLecture/" +imageFileName+".jpg");
 
+            // Transforms the modified image into Bitmap
             image.setDrawingCacheEnabled(true);
             image.measure(View.MeasureSpec.makeMeasureSpec(image.getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(image.getHeight(), View.MeasureSpec.EXACTLY));
             image.layout(0, 0, image.getMeasuredWidth(), image.getMeasuredHeight());
@@ -132,22 +132,23 @@ public class SavePicture extends AppCompatActivity {
             }
             catch(FileNotFoundException e)
             {
-                Log.i(LOG_TAG, e.toString());
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             }
             catch (IOException e)
             {
-                Log.i(LOG_TAG, e.toString());
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             }
         }
         else
         {
-            Toast.makeText(getApplicationContext(),"CHECK STORAGE", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"CHECK STORAGE", Toast.LENGTH_SHORT).show();
         }
 
         Intent intent = new Intent(SavePicture.this, MainActivity.class);
         startActivity(intent);
     }
 
+    // Gets the current subject name from the database
     private void getSubjectName(){
         SubjectViewModel subjectViewModel = ViewModelProviders.of(this ).get(SubjectViewModel.class) ;
         Date date = new Date();
@@ -168,8 +169,10 @@ public class SavePicture extends AppCompatActivity {
             }
         });
     }
+    // Inserts the photo in the database
     private void saveToDb(String path, String subjectName)
     {
+        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
         PhotoViewModel photoViewModel = ViewModelProviders.of(this).get(PhotoViewModel.class);
         Photo photo = new Photo(path, subjectName);
         photoViewModel.insert(photo);

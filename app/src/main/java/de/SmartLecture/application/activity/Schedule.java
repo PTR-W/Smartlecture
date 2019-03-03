@@ -107,6 +107,7 @@ public class Schedule extends AppCompatActivity {
         }
     }
 
+    // Swiping any element to the left
     private void onSwipe(final SubjectAdapter adapter, RecyclerView recyclerView)
     {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -136,6 +137,7 @@ public class Schedule extends AppCompatActivity {
         }).attachToRecyclerView(recyclerView);
     }
 
+    //After the AddEditSubject activity is destroyed
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -154,7 +156,7 @@ public class Schedule extends AppCompatActivity {
         else if (requestCode == EDIT_SUBJECT_REQUEST && resultCode == RESULT_OK)
         {
             int id = intent.getIntExtra(AddEditSubject.EXTRA_ID, -1);
-            // maybe put a check
+            // maybe put a check if the value is -1
             String title = intent.getStringExtra(AddEditSubject.EXTRA_TITLE);
             String day = intent.getStringExtra(AddEditSubject.EXTRA_DAY);
             String dateStart = intent.getStringExtra(AddEditSubject.EXTRA_DATE_START);

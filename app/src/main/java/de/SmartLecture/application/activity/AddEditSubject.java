@@ -43,10 +43,6 @@ public class AddEditSubject extends AppCompatActivity implements AdapterView.OnI
         timePickerStart.setHour(8); timePickerStart.setMinute(0);
         timePickerEnd.setHour(10); timePickerEnd.setMinute(0);
 
-        // Set navigation button
-        getSupportActionBar().setHomeAsUpIndicator(0);
-        getSupportActionBar().setHomeActionContentDescription(0);
-
         // Check if the intention is to Add or Edit
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_ID))
@@ -59,7 +55,6 @@ public class AddEditSubject extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
-
     //Sends the input data back to the parent activity
     private void saveSubject()
     {
@@ -70,6 +65,12 @@ public class AddEditSubject extends AppCompatActivity implements AdapterView.OnI
         if(title.trim().isEmpty())
         {
             Toast.makeText(this, "The title can not be left empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        else if(title.trim().equals("Default"))
+        {
+            Toast.makeText(this, "There can only be on Default folder", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent data = new Intent();

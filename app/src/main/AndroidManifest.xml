@@ -27,8 +27,10 @@
             android:parentActivityName=".application.activity.Schedule" />
         <activity
             android:name=".application.activity.Schedule"
+            android:parentActivityName=".application.activity.Schedule"
             android:launchMode="singleTop" />
-        <activity android:name=".application.activity.SavePicture" />
+        <activity android:name=".application.activity.SavePicture"
+                  android:parentActivityName=".application.activity.Schedule"/>
         <activity
             android:name=".application.activity.ViewPhotos"
             android:parentActivityName=".application.activity.Schedule" />
